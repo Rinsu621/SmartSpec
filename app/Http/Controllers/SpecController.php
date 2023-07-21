@@ -16,11 +16,11 @@ class SpecController extends Controller
         return view('Spec.view')->with(compact('specs','brands'));
     }
 
-    // public function create()
-    // {
-    //     $brands=Brand::all();
-    //     return view('Spec.create')->with(compact('brands'));
-    // }
+    public function create()
+    {
+        $brands=Brand::all();
+        return view('Spec.create')->with(compact('brands'));
+    }
     public function store(Request $request)
     {
         $brands=Brand::all();

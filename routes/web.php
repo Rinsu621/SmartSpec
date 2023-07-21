@@ -35,7 +35,7 @@ Route::put('/brand/{id}',[BrandController::class,'update']);
 
 
 Route::get('/spec',[SpecController::class,'index'])->name('spec.view');
-// Route::get('/spec/create',[SpecController::class,'create'])->name('specCreate');
+Route::get('/spec/create',[SpecController::class,'create'])->name('specCreate');
 Route::post('/spec',[SpecController::class,'store'])->name('specStore');
 Route::delete('/spec/{id}',[SpecController::class,'destroy']);
 Route::get('/spec/{id}/edit',[SpecController::class,'edit']);

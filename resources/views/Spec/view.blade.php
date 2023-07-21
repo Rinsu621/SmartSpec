@@ -179,6 +179,46 @@
         font-size: 20px;
         color: #1B5D6B;
     }
-   
+
+    .popup-form-create {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #f2f2f2;
+        padding: 20px;
+        border: 1px solid #f2f2f2;
+        border-radius: 8px;
+        z-index: 1;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        max-width: 400px; /* Adjust the maximum width as needed */
+    }
+
+    .back-arrow {
+        cursor: pointer;
+    }
+
+    .spec {
+        text-align: center;
+    }
+
+    .popup-form-create label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .popup-form-create .btn-add {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background-color: #1B5D6B;
+        color: #f2f2f2;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+
 </style>
 
