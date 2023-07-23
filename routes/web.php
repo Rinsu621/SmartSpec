@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 Use App\Http\Controllers\UserController;
 Use App\Http\Controllers\BrandController;
 Use App\Http\Controllers\SpecController;
+use App\Http\Controllers\SearchController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,9 +30,10 @@ Route::post('/register',[UserController::class,'store'])->name('register.store')
 Route::get('/brand',[BrandController::class,'index'])->name('brand.view');
 // Route::get('/brand/create',[BrandController::class,'create'])->name('brand.create');
 Route::post('/brand',[BrandController::class,'store'])->name('brand.store');
-Route::delete('/brand/{id}',[BrandController::class,'destroy']);
+Route::delete('/brand/{id}',[BrandController::class,'destroy'])->name('brand.destroy');
 Route::get('/brand/{id}/edit',[BrandController::class,'edit']);
 Route::put('/brand/{id}',[BrandController::class,'update']);
+Route::get('/brand/search', 'BrandController@search');
 
 
 Route::get('/spec',[SpecController::class,'index'])->name('spec.view');
@@ -40,4 +42,9 @@ Route::post('/spec',[SpecController::class,'store'])->name('specStore');
 Route::delete('/spec/{id}',[SpecController::class,'destroy']);
 Route::get('/spec/{id}/edit',[SpecController::class,'edit']);
 Route::put('/spec/{id}',[SpecController::class,'update']);
-Route::get('/detail',[SpecController::class,'detail']);
+
+
+Route::
+get('/',[UserController::class,'home'])->name('index.page');
+
+Route::get('/search', [SearchController::class, 'search'])->name('search');

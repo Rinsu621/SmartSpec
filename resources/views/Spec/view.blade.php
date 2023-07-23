@@ -4,52 +4,13 @@
 <div class="content">
 @section('content')
 <div id="overlay"></div>
+<div id="overlay"></div>
 <div class="spec-view">
     <h2 class="spec-topic">Specification List</h2>
-    <button class="create" type="submit" onclick="togglePopup('create')">Create</button>
-    <div class="popup-form-create" id="specForm" style="display:none;">
-        <div class="back-arrow" onclick="togglePopup('create')">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 .146.353v11.5a.5.5 0 0 1-.854.353L5.207 8l5.293-5.854a.5.5 0 0 1 .353-.146z"/>
-            </svg>
-        </div>
-        <h2 class="spec">Add Specification</h2>
-        <form action="/spec" method="POST" style="display: block;">
+    <form action="{{route('specCreate')}}" method="GET">
         @csrf
-        <label for="name">Name</label><br>
-        <input type="text" name="name" class="name" id="name"><br><br>
-        <label for="brand_id">Brand</label>
-        <select name="brand_id" id="brand_id" class="form-control">
-            @foreach ($brands as $brand )
-                <option value="{{$brand->id}}">{{$brand->name}}</option>
-            @endforeach
-           </select><br><br>
-        <label for="price">Price</label><br>
-        <input type="text" class="price" name="price" id="price"><br><br>
-        <label for="launch">Launch</label><br>
-        <input type="date" class="launch" name="launch" id="launch"><br><br>
-        <label for="color">Color</label>
-        <input type="text" class="color" name="color" id="color"><br><br>
-        <label for="processor">Processor</label><br>
-        <input type="text" name="processor" id="processor" class="processor"><br><br>
-        <label for="ram">RAM</label><br>
-        <input type="text" class="ram" name="ram" id="ram"><br><br>
-        <label for="storage">Storage</label><br>
-        <input type="text" name="storage" id="storage" class="storage"><br><br>
-        <label for="display">Display</label><br>
-        <input type="text" name="display" id="display" class="display"><br><br>
-        <label for="camera">Camera</label><br>
-        <input type="text" class="camera" name="camera" id="camera"><br><br>
-        <label for="battery">Battery</label><br>
-        <input type="text" class="battery" name="battery" id="battery"><br><br>
-        <label for="resistance">Resistance</label><br>
-        <input type="text" class="resistance" name="resistance" id="resistance"><br><br>
-        <label for="image">Image</label><br>
-        <input type="file" class="image" name="image" id="image"><br><br>
-        <button type="submit" class="btn-add">Add</button>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         v
-        </form>
-    </div>
+        <button type="submit" class="create">Create</button>
+    </form>
     <div class="table-container">
         <table class="custom-table">
             <thead class="th-heading">
@@ -57,8 +18,8 @@
                     <th scope="col">S.No</th>
                     <th scope="col">Name</th>
                     <th scope="col">Brand</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">launch</th>
+                    <th scope="col">Launch</th>
+                    <th scope="col">RAM</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -68,51 +29,86 @@
                     <td>{{$loop->iteration}}</td>
                     <td>{{$spec->name}}</td>
                     <td>{{$spec->brand->name}}</td>
-                    <td>{{$spec->price}}</td>
                     <td>{{$spec->launch}}</td>
+                    <td>{{$spec->ram}}</td>
                     <td>
-                        <a href="/detail" class="btn-detail">View More</a>
+                       {{-- <form>
+                        <button type="submit" class="viewmore" onclick="togglePopup('detail{{$spec->id}}')">Viewmore</button>
+                       </form> --}}
+                       <a href="#" class="viewmore" onclick="togglePopup('detail{{$spec->id}}')">View More</a>
                     </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
 
+        @foreach ($specs as $spec)
+        <div class="popup-detail" id="detail{{$spec->id}}" style="display: none;">
+        <div class="back-arrow" onclick="togglePopup('detail{{$spec->id}}')">
+         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 .146.353v11.5a.5.5 0 0 1-.854.353L5.207 8l5.293-5.854a.5.5 0 0 1 .353-.146z"/>
+                </svg>
+        </div>
+        <h2 class="specification">Specification</h2>
+        <center><img src="{{asset('images/'.$spec->image)}}" alt="{{$spec->name}}" width="150" class="image"></center><br>
+        <p class="name">{{$spec->name}}</p>
+        <p class="brand"><b>Brand: </b> {{$spec->brand->name}}</p>
+        <p class="price"><b>Price: </b>{{$spec->price}}</p>
+        <p class="launch"><b>Launch:</b> {{$spec->launch}}</p>
+        <p class="color"><b>Color:</b> {{$spec->color}}</p>
+        <p class="processor"><b>Processor:</b>{{$spec->processor}}</p>
+        <p class="ram"><b>RAM:</b>{{$spec->ram}}</p>
+        <p class="storage"><b>Storage:</b>{{$spec->storage}}</p>
+        <p class="display"><b>Display:</b>{{$spec->display}}</p>
+        <p class="camera"><b>Camera:</b>{{$spec->camera}}</p>
+        <p class="battery"><b>Battery:</b>{{$spec->battery}}</p>
+        <p class="resistance"><b>Resistance:</b>{{$spec->resistance}}</p>
+        <div class="button-view">
+       <a href="/spec/{{$spec->id}}/edit" class="btn-edit">Edit</a>
+        <form id="deleteForm{{$loop->iteration}}" action="/spec/{{$spec->id}}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button class="delete" type="button" onclick="confirmDelete({{$loop->iteration}})">Delete</button>
+        </form>
+    </div>
+</div>
+        @endforeach
     </div>
     </div>
+</div>
 </div>
 @endsection
 </div>
 
 <script>
-    function togglePopup(popupType)
-    {
-        popupCreate=document.getElementById('specForm');
-        var overlay = document.getElementById('overlay');
-        if(popupCreate.style.display==='none')
-        {
-            popupCreate.style.display='block';
-            overlay.style.display = 'block';
-        }
-        else {
-                popupCreate.style.display = 'none';
-                overlay.style.display = 'none';
 
-            }
+
+ function confirmDelete(iteration) {
+        if (confirm('Are you sure you want to delete this Specification?')) {
+            document.getElementById('deleteForm' + iteration).submit();
+        } else {
+            return false;
+        }
     }
+
+function togglePopup(popupId) {
+    var popupdetail = document.getElementById(popupId);
+     var overlay = document.getElementById('overlay');
+    var computedStyle = window.getComputedStyle(popupdetail);
+
+    if (computedStyle.display === 'none') {
+        popupdetail.style.display = 'block';
+          overlay.style.display = 'block';
+    } else {
+        popupdetail.style.display = 'none';
+          overlay.style.display = 'none';
+
+    }
+  }
+
 </script>
 
 <style>
-     #overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.7); /* Translucent black background */
-        z-index: 1; /* Ensure the overlay appears above other elements */
-    }
 
     .content
     {
@@ -163,10 +159,15 @@
     .custom-table th,
     .custom-table td{
         padding: 5px;
-        width: 50px;
+        width: 80px;
+        height: 60px;
         text-align: center;
         border-bottom: 1px solid #1B5D6B;
     }
+    .custom-table td{
+        font-size: 15px;
+    }
+
     .th-heading
     {
         font-size: 20px;
@@ -180,8 +181,8 @@
         color: #1B5D6B;
     }
 
-    .popup-form-create {
-        display: none;
+    .popup-detail {
+      display: none;
         position: fixed;
         top: 50%;
         left: 50%;
@@ -192,33 +193,115 @@
         border-radius: 8px;
         z-index: 1;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        max-width: 400px; /* Adjust the maximum width as needed */
     }
-
     .back-arrow {
         cursor: pointer;
-    }
-
-    .spec {
-        text-align: center;
-    }
-
-    .popup-form-create label {
-        display: block;
+        display: inline-block;
+        color: #1B5D6B;
         margin-bottom: 10px;
+        margin-right: 340px;
+        margin-top: 2px;
     }
 
-    .popup-form-create .btn-add {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
+    .viewmore
+    {
         background-color: #1B5D6B;
-        color: #f2f2f2;
+        text-decoration: none;
+        padding: 12px;
+        color: #F2F2F2;
+        border-radius: 30px;
+        font-size: 15px;
+    }
+    .viewmore:hover {
+    text-decoration: none;
+    color: #F2F2F2;
+}
+
+.specification
+{
+    color: #1B5D6B;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+.image
+{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+.image img {
+        max-width: 100%;
+        max-height: 200px; /* Set the maximum height for the image */
+        object-fit: contain;
+}
+.name
+{
+    color: #1B5D6B;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
+p
+{
+    color: #1B5D6B;
+}
+
+.btn-edit
+{
+       background-color: #1B5D6B;
+       color: #F2F2F2;
+       width: 100px;
+        height: 40px;
         border: none;
-        border-radius: 5px;
+        padding: 5px 20px;
+        border-radius: 20px;
+        margin: 10px 0;
         cursor: pointer;
+        font-size: 15px;
+        text-align: center;
+        padding-top: 10px;
+        margin-top: 15px;
+}
+.btn-edit:hover{
+    text-decoration: none;
+    color: #F2F2F2;
+}
+.delete
+{
+    width: 100px;
+        height: 40px;
+        border: none;
+        background-color:  rgb(143, 16, 16);
+        color: #F2F2F2;
+        padding: 5px 20px;
+        border-radius: 20px;
+        margin: 10px 0;
+        cursor: pointer;
+        font-size: 15px;
+}
+.button-view
+{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+
+}
+
+ #overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7); /* Translucent black background */
+        z-index: 1; /* Ensure the overlay appears above other elements */
     }
 
-
+    .popup-detail[style="display: block;"] + #overlay {
+        display: block;
+    }
 </style>
 

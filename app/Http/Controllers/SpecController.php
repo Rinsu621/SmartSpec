@@ -11,9 +11,8 @@ class SpecController extends Controller
 {
     public function index()
     {
-        $brands=Brand::all();
         $specs=Spec::all();
-        return view('Spec.view')->with(compact('specs','brands'));
+        return view('Spec.view')->with(compact('specs'));
     }
 
     public function create()
@@ -24,8 +23,10 @@ class SpecController extends Controller
     public function store(Request $request)
     {
         $brands=Brand::all();
-        $image=$request->image->store('images','public');
-
+        // $image=$request->image->store('images','public');
+        $destinationPath = 'images'; //set a folder to save your images
+        $image = $request->image->getClientOriginalName(); //get the name of the image which you are uploading
+        $request->image->move(public_path($destinationPath), $image);//store the image in destnation path
         Spec::create([
         'name'=>$request->name,
         'image'=>$image,
@@ -48,7 +49,7 @@ class SpecController extends Controller
         public function destroy($id)
         {
             Spec::findOrFail($id)->delete();
-            return view('/spec');
+            return redirect('/spec');
         }
 
         public function edit($id)
@@ -58,7 +59,7 @@ class SpecController extends Controller
             return view('Spec.edit')->with(compact('spec','brands'));
         }
 
-        public function update(Request $request)
+        public function update(Request $request, $id)
         {
             $update=[
                 'name'=>$request->name,
@@ -76,8 +77,10 @@ class SpecController extends Controller
             ];
             if($request->image)
             {
-                $image=$request->image->store('images');
-                $update['image']=$image;
+                $destinationPath = 'images';
+        $image = $request->image->getClientOriginalName();
+        $request->image->move(public_path($destinationPath), $image);
+        $update['image'] = $image;
             }
             Spec::findOrFail($id)->update($update);
       return redirect('/spec');
@@ -89,4 +92,5 @@ class SpecController extends Controller
     $spec=Spec::findOrFail($id);
     return view('Spec.viewmore')->with(compact('spec','brands'));
    }
+
 }

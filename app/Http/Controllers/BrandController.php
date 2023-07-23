@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Brand;
+use App\Models\Spec;
 use Illuminate\Http\Request;
 
 class BrandController extends Controller
@@ -45,4 +46,6 @@ class BrandController extends Controller
         ]);
         return redirect('/brand');
     }
+
+
 }

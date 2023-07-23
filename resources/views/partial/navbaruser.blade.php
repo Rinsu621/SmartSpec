@@ -10,16 +10,16 @@
 <body>
     <header>
 
-        <a href="/spec" class="logo"><img src="{{asset('logo/Final-logo.png')}}" width="100px" height="70px"></a>
+        <a href="/" class="logo"><img src="{{asset('logo/Final-logo.png')}}" width="100px" height="70px"></a>
         <nav>
             <div class="nav-item">
-            <a href="/spec">Specification</a>
-            <a href="/brand">Brand</a>
+            <a href="/">Smartphone</a>
+            <a href="/compare">Compare</a>
         </div>
         </nav>
         {{-- <div > --}}
 
-            <form action="/search" method="GET">
+            <form action="">
                 @csrf
                 <input type="text" placeholder="search anything" name="search">
                 <button type="submit" name="search" class="btn"><i class="fas fa-search"></i></button>
@@ -51,7 +51,6 @@
     }
 
     header{
-        position: fixed;
         top: 0;
         left: 0;
         width: 100%;

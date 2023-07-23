@@ -82,4 +82,11 @@ class UserController extends Controller
         Auth::logout();
         return redirect('/login');
     }
+
+    public function home()
+    {
+        $specs=Spec::all();
+        $brands=Brand::all();
+        return view('User.view')->with(compact('specs','brands'));
+    }
 }

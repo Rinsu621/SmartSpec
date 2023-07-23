@@ -300,6 +300,10 @@
 
 
     }
+    .custom-table td
+    {
+        padding: 0.5px;
+    }
     .heading
     {
         font-size: 20px;
