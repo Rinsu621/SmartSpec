@@ -46,5 +46,6 @@ Route::put('/spec/{id}',[SpecController::class,'update']);
 
 Route::
 get('/',[UserController::class,'home'])->name('index.page');
+// Route::get('/add-rating',)
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
