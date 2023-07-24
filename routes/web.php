@@ -5,6 +5,7 @@ Use App\Http\Controllers\UserController;
 Use App\Http\Controllers\BrandController;
 Use App\Http\Controllers\SpecController;
 use App\Http\Controllers\SearchController;
+use App\Http\Controllers\CompareController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,3 +50,8 @@ get('/',[UserController::class,'home'])->name('index.page');
 // Route::get('/add-rating',)
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
+
+//Compare
+Route::get('/compare', 'CompareController@index')->name('compare');
+Route::post('/compare/clear', 'CompareController@clear')->name('clearComparison');

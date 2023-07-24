@@ -89,4 +89,7 @@ class UserController extends Controller
         $brands=Brand::all();
         return view('User.view')->with(compact('specs','brands'));
     }
+
+    //compare
+
 }
