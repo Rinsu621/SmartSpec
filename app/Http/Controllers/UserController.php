@@ -25,7 +25,7 @@ class UserController extends Controller
             );
             if($user)
             {
-                return redirect()->route('/');
+                return redirect()->route('index.page');
             }
             else if($request['name']=='admin' && $request['password']=='smartadmin146')
             {

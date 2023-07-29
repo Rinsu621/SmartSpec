@@ -18,6 +18,7 @@ use App\Http\Controllers\CompareController;
 |
 */
 //login
+Route::get('/',[UserController::class,'home'])->name('index.page');
 Route::get('/login',[UserController::class,'loginPage'])->name('loginPage');
 Route::post('/login',[UserController::class,'attemptlogin'])->name('loginStore');
 Route::post('/logout',[UserController::class,'logout'])->name('logout');
@@ -45,8 +46,6 @@ Route::get('/spec/{id}/edit',[SpecController::class,'edit']);
 Route::put('/spec/{id}',[SpecController::class,'update']);
 
 
-Route::
-get('/',[UserController::class,'home'])->name('index.page');
 // Route::get('/add-rating',)
 
 Route::get('/search', [SearchController::class, 'search'])->name('search');
@@ -54,3 +53,4 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 //Compare
 Route::get('/compare',[CompareController::class, 'index']);
+Route::post('/addToCompare',[CompareController::class,'addToCompare'])->name('compare.add');
