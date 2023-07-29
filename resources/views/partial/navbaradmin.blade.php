@@ -55,7 +55,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 80px;
+        height: 60px;
         padding: 10px 20px;
         background: #1b5d6b;
         display: flex;

@@ -53,5 +53,4 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 
 //Compare
-Route::get('/compare', 'CompareController@index')->name('compare');
-Route::post('/compare/clear', 'CompareController@clear')->name('clearComparison');
+Route::get('/compare',[CompareController::class, 'index']);

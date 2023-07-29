@@ -54,7 +54,7 @@ $uniqueBrands = $specs->pluck('brand.name')->unique();
     @foreach($uniqueBrands as $brand)
     <h3 class="brand-heading">{{ $brand }}</h3>
     <div class="slider-container">
-    <div class="card-container">
+    <div class="card-container  card-row">
         @foreach($specs->where('brand.name', $brand) as $spec)
         <div class="card">
             <div class="card-header">
@@ -65,12 +65,20 @@ $uniqueBrands = $specs->pluck('brand.name')->unique();
             </div>
             <div class="card-footer">
                 <a href="#" class="detail" onclick="togglePopup('detail{{$spec->id}}')">Detail</a>
-                <a href="#" class="compare" onclick="togglePopup('detail{{$spec->id}}')">Compare</a>
+                    <button class="compare" type="submit" id="compare" >Compare</button>
             </div>
         </div>
         @endforeach
     </div>
+    @if(count($specs->where('brand.name', $brand)) > 4)
+    <div class="view-more-container">
+        <button class="view-more-btn" onclick="showMore(this)">View More</button>
+    </div>
+    @endif
+</div>
+
     @endforeach
+</div>
 @foreach($uniqueBrands as $brand)
   @foreach($specs->where('brand.name', $brand) as $spec)
    <div class="popup-detail" id="detail{{$spec->id}}" style="display: none;">
@@ -168,17 +176,19 @@ $uniqueBrands = $specs->pluck('brand.name')->unique();
 }
 
 .compare {
+    cursor: pointer;
+    border: none;
     background-color: #888888;
     text-decoration: none;
-    padding: 8px 15px;
     color: #F2F2F2;
     border-radius: 30px;
     font-size: 14px;
+    padding-left: 15px;
+    padding-right: 15px;
+    height: 40px;
+    margin-top: 5px;
 }
-.compare:hover{
-    text-decoration: none;
-    color: #F2F2F2;
-}
+
 
 
 .brand-heading
@@ -338,6 +348,33 @@ p
     font-weight: bold;
   }
 
+  .card-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.view-more-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.view-more-btn {
+    border: none;
+    background-color: #1B5D6B;
+    padding: 10px 20px;
+    color: #F2F2F2;
+    border-radius: 50px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline for the button */
+    display: inline-block;
+}
+.view-more-btn:hover {
+    background-color: #15657c;
+}
+
   </style>
 
 <script>
@@ -365,4 +402,34 @@ function togglePopup(popupId) {
 
     }
   }
+
+  function showMore(button) {
+        var cardContainer = button.parentElement.previousElementSibling;
+        var cards = cardContainer.querySelectorAll('.card');
+
+        cards.forEach(function (card, index) {
+            if (index >= 4) {
+                card.style.display = card.style.display === 'block' ? 'none' : 'block';
+            }
+        });
+
+        button.textContent = button.textContent === 'View Less' ? 'View More' : 'View Less';
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+        var buttons = document.querySelectorAll('.view-more-btn');
+        buttons.forEach(function (button) {
+            var cardContainer = button.parentElement.previousElementSibling;
+            var cards = cardContainer.querySelectorAll('.card');
+
+            cards.forEach(function (card, index) {
+                if (index >= 4) {
+                    card.style.display = 'none';
+                }
+            });
+
+            button.textContent = cards.length > 4 ? 'View More' : 'View Less';
+        });
+    });
+
 </script>
+
