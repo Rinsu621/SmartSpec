@@ -47,4 +47,19 @@ class CompareController extends Controller
          'message' => 'Product added to compare successfully'
       ]);
    }
+   public function removeFromCompare(Request $request){
+
+
+       // Retrieve the product_id from the AJAX request data
+       $specId = $request->input('specId');
+       $user_id = auth()->id();
+        
+       //check if the user has already stored the product, you
+       $check_if_already_added = Compare::where('id',$specId)->delete();
+        return response()->json([
+          'status'  => 'true',
+          'action'  => 'added',//this is a boolean for jquery to change the color of the compare button
+          'message' => 'Product removed from compare'
+       ]);
+   }
 }

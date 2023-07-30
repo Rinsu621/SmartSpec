@@ -55,6 +55,15 @@
         </td>
       @endforeach
     </tr>
+
+    <tr>
+      <th>Action:</th>
+        @foreach ($user_compare_products as $item)
+          <td>
+            <button class="remove-compare" data-productid="{{$item->id}}" style="background:red">Remove</button>
+          </td>
+        @endforeach
+    </tr>
   </table>
 
 <?php } ?>
