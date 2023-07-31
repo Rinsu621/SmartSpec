@@ -86,7 +86,7 @@
                                         }
                                     @endphp
                                 <button class="compare" data-productId="{{ $spec->id }}" id="compare"
-                                    {{$added==1?'style=background:red':''}}
+                                    {{$added==1?'style=background:green':''}}
                                     {{-- the above is nothing but an if else check of the boolean --}}
                                     {{-- if the product is already added to compare then it appears red --}}
                                     >Compare</button>

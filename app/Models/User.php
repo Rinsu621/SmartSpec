@@ -1,95 +1,45 @@
 <?php
 
-namespace App\Http\Controllers;
-use App\Models\User;
-use App\Models\Spec;
-use App\Models\Brand;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+namespace App\Models;
 
-class UserController extends Controller
+// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+
+class User extends Authenticatable
 {
-    public function loginPage()
-    {
-        return view('User.login');
-    }
-    public function attemptLogin(Request $request)
-    {
-        $user=Auth::attempt(
-            [
-                "name"=> $request->name,
-                "password"=> $request->password
-            ]
-            );
-            if($user)
-            {
-                return redirect()->route('index.page');
-            }
-            else if($request['name']=='admin' && $request['password']=='smartadmin146')
-            {
-            return redirect()->route('spec.view');
-            }
+    use HasApiTokens, HasFactory, Notifiable;
 
-            else{
-                return redirect()->route('loginPage')->withErrors(['Invalid Credentials'])->withInput();
-            }
-    }
-    public function login(Request $request)
-    {
-        $request->validate([
-            'name'=> 'required',
-            'password'=> 'required'
-        ]);
-    }
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+    ];
 
+    /**
+     * The attributes that should be hidden for serialization.
+     *
+     * @var array<int, string>
+     */
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
-    public function create()
-    {
-        return view('User.Register');
-    }
-
-
-    public function store(Request $request)
-    {
-        $validator=Validator::make($request->all(),
-        [
-            'name'=> 'required',
-            'email'=> 'required|unique:users|email',
-            'password'=>'required'
-        ]);
-        if($validator->fails())
-        {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-        try{
-            User::create([
-                'name'=> $request->name,
-                'email'=> $request->email,
-                'password'=> Hash::make($request->password)
-            ]);
-            return redirect()->route('loginPage')->withSuccess("Registration Complete. Please Login");
-        }
-        catch(Exception $e)
-        {
-            return redirect()->back()->withErrors($e->getMessage())->withInput();
-        }
-
-    }
-    public function logout()
-    {
-        Auth::logout();
-        return redirect('/login');
-    }
-
-    public function home()
-    {
-        $specs=Spec::all();
-        $brands=Brand::all();
-        return view('User.view')->with(compact('specs','brands'));
-    }
-
-    //compare
-
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password' => 'hashed',
+    ];
 }

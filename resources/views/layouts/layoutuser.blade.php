@@ -57,6 +57,43 @@
                 }
             });
         });
+        $('.remove-compare').on('click',function(){
+            //save the clicked button in a variable to change the color if saved
+            var compareBtn = $(this);
+            //save the id of the product in a variable to pass through ajax to the route
+            // $(this).data('productid') means -- get the value from attribute data-productid of the button just clicked, you can see i have added an attribute the compare button
+            var specId = $(this).data('productid');
+              // Data to be sent in the POST request
+            var data = {
+                specId: specId
+            };
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: "/removeFromCompare", // URL where the request should be sent
+                type: "POST", // Request method
+                data: data, // Data to be sent in the request body
+                dataType: "json", // Expected data type of the response
+                success: function(response) {
+                    location.reload();
+                    // if(response.action == 'removed'){
+                    //     compareBtn.css('background','#888888');
+                    // }else{
+                    //     compareBtn.css('background','red');
+                    // }
+                    // console.log(response);
+                    // console.log(response.message);
+                },
+                error: function(xhr, status, error) {
+                    // This function will be executed if the request fails
+                    console.error("Error adding product to compare:", error);
+                }
+            });
+        });
+
     </script>
 </body>
 </html>

@@ -23,7 +23,7 @@
           @endforeach
     </tr>
     <tr>
-      <th>Title:</th>
+      <th>Name:</th>
       @foreach ($user_compare_products as $item)
     <td>
             @php
@@ -33,6 +33,17 @@
         </td>
       @endforeach
     </tr>
+    <tr>
+        <th>Brand</th>
+        @foreach ($user_compare_products as $item)
+      <td>
+              @php
+                  $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
+              @endphp
+            {{$product_detail->brand}}
+          </td>
+        @endforeach
+      </tr>
     <tr>
       <th>Price:</th>
       @foreach ($user_compare_products as $item)
@@ -40,10 +51,43 @@
             @php
                 $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
             @endphp
-          {{$product_detail->name}}
+          {{$product_detail->price}}
         </td>
       @endforeach
     </tr>
+    <tr>
+        <th>Launch:</th>
+        @foreach ($user_compare_products as $item)
+      <td>
+              @php
+                  $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
+              @endphp
+            {{$product_detail->launch}}
+          </td>
+        @endforeach
+      </tr>
+      <tr>
+        <th>Color</th>
+        @foreach ($user_compare_products as $item)
+      <td>
+              @php
+                  $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
+              @endphp
+            {{$product_detail->color}}
+          </td>
+        @endforeach
+      </tr>
+      <tr>
+        <th>Processor</th>
+        @foreach ($user_compare_products as $item)
+      <td>
+              @php
+                  $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
+              @endphp
+            {{$product_detail->processor}}
+          </td>
+        @endforeach
+      </tr>
     <tr>
       <th>RAM:</th>
       @foreach ($user_compare_products as $item)
@@ -51,9 +95,73 @@
             @php
                 $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
             @endphp
-          {{$product_detail->name}}
+          {{$product_detail->ram}}
         </td>
       @endforeach
+    </tr>
+    <tr>
+        <th>Storage</th>
+        @foreach ($user_compare_products as $item)
+      <td>
+              @php
+                  $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
+              @endphp
+            {{$product_detail->storage}}
+          </td>
+        @endforeach
+      </tr>
+      <tr>
+        <th>Display</th>
+        @foreach ($user_compare_products as $item)
+      <td>
+              @php
+                  $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
+              @endphp
+            {{$product_detail->display}}
+          </td>
+        @endforeach
+      </tr>
+      <tr>
+        <th>Camera</th>
+        @foreach ($user_compare_products as $item)
+      <td>
+              @php
+                  $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
+              @endphp
+            {{$product_detail->camera}}
+          </td>
+        @endforeach
+      </tr>
+      <tr>
+        <th>Battery</th>
+        @foreach ($user_compare_products as $item)
+      <td>
+              @php
+                  $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
+              @endphp
+            {{$product_detail->battery}}
+          </td>
+        @endforeach
+      </tr>
+      <tr>
+        <th>Resistance</th>
+        @foreach ($user_compare_products as $item)
+      <td>
+              @php
+                  $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
+              @endphp
+            {{$product_detail->resistance}}
+          </td>
+        @endforeach
+      </tr>
+
+    <tr>
+      <th>Action:</th>
+        @foreach ($user_compare_products as $item)
+          <td>
+            <button class="remove-compare" data-productid="{{$item->id}}" style="background:red">Remove</button>
+          </td>
+        @endforeach
     </tr>
   </table>
 
