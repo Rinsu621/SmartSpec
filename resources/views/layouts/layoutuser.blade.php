@@ -46,7 +46,7 @@
                     if(response.action == 'removed'){
                         compareBtn.css('background','#888888');
                     }else{
-                        compareBtn.css('background','red');
+                        compareBtn.css('background','green');
                     }
                     console.log(response);
                     console.log(response.message);
