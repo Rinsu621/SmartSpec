@@ -18,7 +18,7 @@
                 $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
                 // dd($product_detail);
             @endphp
-          <img style="max-width: 200px" src="{{asset('images/'.$product_detail->image)}}" alt="">
+          <img src="{{asset('images/'.$product_detail->image)}}" alt="">
         </td>
           @endforeach
     </tr>
@@ -159,15 +159,79 @@
       <th>Action:</th>
         @foreach ($user_compare_products as $item)
           <td>
-            <button class="remove-compare" data-productid="{{$item->id}}" style="background:red">Remove</button>
+            <button class="remove-compare" data-productid="{{$item->id}}" >Remove</button>
           </td>
         @endforeach
     </tr>
   </table>
 
-<?php } ?>
+<?php  }?>
 
 
 
 
 @endsection
+<style>
+       @font-face {
+    font-family: 'Anderson Grotesk';
+    src: url('/path-to-your-fonts/anderson-grotesk.woff2') format('woff2'),
+         url('/path-to-your-fonts/anderson-grotesk.woff') format('woff');
+    /* Add more formats here if needed (e.g., .ttf) */
+    font-weight: normal; /* Adjust as needed */
+    font-style: normal; /* Adjust as needed */
+      }
+    *{
+        font-family: 'Anderson Grotesk', sans-serif;
+
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        border: 1px solid #1B5D6B;
+        border-radius: 20px;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #1B5D6B;
+        color: #1B5D6B;
+
+    }
+
+    th {
+        color: #1B5D6B;
+        background-color: #F2F2F2;
+        font-weight: bold;
+        font-size: 16px;
+    }
+    td img {
+        max-width: 150px;
+        max-height: 150px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .remove-compare {
+        background:  rgb(143, 16, 16);
+        color: #f2f2f2;
+        border: none;
+        padding: 8px 12px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .remove-compare:hover {
+        background-color: rgb(125, 9, 9) ;
+        color: #f2f2f2;
+
+    }
+    @media (max-width: 768px) {
+        table {
+            font-size: 14px;
+        }
+    }
+
+</style>

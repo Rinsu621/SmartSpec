@@ -172,50 +172,60 @@
         width:100%;
     }
     @media (max-width: 768px) {
-        header {
-            padding: 5px;
-            align-items: flex-start;
+            header {
+                padding: 5px;
+                align-items: flex-start;
+            }
+
+            .logo {
+                margin-right: 5px;
+                margin-top: 0;
+            }
+
+            nav {
+                margin-top: 5px;
+                text-align: left;
+                margin-left: auto;
+            }
+
+            nav a {
+                margin-left: 0;
+                margin-right: 10px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            form {
+                margin-top: 10px;
+            }
+
+            form input {
+                width: 100%;
+            }
+
+            .btn {
+                width: 40%;
+                padding: 5px 20px;
+            }
+
+            .logout {
+                width: 100%;
+                padding: 5px 20px;
+            }
+
+            /* Optionally, you can hide the nav links when collapsed */
+            .nav-item {
+                display: none;
+            }
+
+            /* Show the collapsed nav links when the menu icon is clicked */
+            .menu-icon:checked + .nav-item {
+                display: flex;
+            }
         }
 
-        .header-content {
-            margin-bottom: 10px;
-        }
-        .logo
-        {
-            margin-right: 5px;
-            margin-top: 0;
-        }
-
-        nav {
-            margin-top: 5px;
-            text-align: left;
-            margin-left: auto
-        }
-
-        nav a {
-            margin-left: 0;
-            margin-right: 10px;
-
-        }
-
-        form {
-            margin-top: 10px;
-        }
-
-        form input
-         {
-            width: 100%;
-        }
-        .btn
-        {
-            width: 40%;
-            padding: 5px 20px;
-        }
-        .logout
-        {
-            width:100%;
-            padding: 5px 20px;
-        }
-    }
 
 </style>

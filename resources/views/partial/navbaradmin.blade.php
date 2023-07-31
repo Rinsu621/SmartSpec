@@ -46,6 +46,7 @@
 </script>
 
 <style>
+   
      @font-face {
     font-family: 'Anderson Grotesk';
     src: url('/path-to-your-fonts/anderson-grotesk.woff2') format('woff2'),
