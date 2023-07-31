@@ -24,15 +24,26 @@
                 <input type="text" placeholder="search anything" name="search">
                 <button type="submit" name="search" class="btn"><i class="fas fa-search"></i></button>
             </form>
-            <form action="{{route('loginPage')}}" method="POST">
+            <form action="{{route('logout')}}" method="POST">
                 @csrf
-                <button type="submit" name="logout" class="logout">Logout</button>
+                <button type="submit" name="logout" class="logout" onclick="confirmLogout()">Logout</button>
             </form>
             {{-- <div class="menu-btn">&#9776;</div> --}}
     </header>
 
 </html>
-
+<script>
+    function confirmLogout()
+  {
+      if(confirm('Are you sure you want to Logout?'))
+  {
+  document.getElementById('deleteForm').submit();
+  }
+  else{
+      return false;
+  }
+}
+</script>
 
 <style>
      @font-face {

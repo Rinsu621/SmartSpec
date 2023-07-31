@@ -18,8 +18,8 @@ use App\Http\Controllers\CompareController;
 |
 */
 //login
-Route::get('/home',[UserController::class,'home'])->name('index.page');
 Route::get('/',[UserController::class,'loginPage'])->name('loginPage');
+Route::get('/home',[UserController::class,'home'])->name('index.page');
 Route::post('/login',[UserController::class,'attemptlogin'])->name('loginStore');
 Route::post('/logout',[UserController::class,'logout'])->name('logout');
 

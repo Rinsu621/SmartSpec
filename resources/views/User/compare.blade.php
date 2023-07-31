@@ -40,7 +40,7 @@
               @php
                   $product_detail = \App\Models\Spec::where('id',$item->prod_id)->first();
               @endphp
-            {{$product_detail->brand}}
+            {{$product_detail->brand->name}}
           </td>
         @endforeach
       </tr>

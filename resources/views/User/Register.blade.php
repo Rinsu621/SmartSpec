@@ -1,39 +1,3 @@
-
-<div class="account-page">
-    <div class="container">
-        <div class="row">
-            <div class="col-2">
-                <img src="{{asset("FrontImg/Front photo.png")}}" width="100%">
-            </div>
-            <div class="col-2">
-                <div class="form-container">
-                    <span><a href="/login">Login</a></span>
-                    <span> <a href="/register">Register</span></a>
-                    @if($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{$error}}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-                    <form action="{{route('register.store')}}" method="POST">
-                        @csrf
-                        <div class="{{ $errors->any()?'input-container-error':'input-container' }}">
-                        <input type="text" placeholder="Username" name="name">
-                        <input type="email" placeholder="Email" name="email">
-                        <input type="password" placeholder="Password" name="password">
-                        <button type="submit" class="btn">Sign Up</button>
-                    </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-        </div>
-</div>
-
 <style>
     @font-face {
     font-family: 'Anderson Grotesk';
@@ -188,4 +152,40 @@
         }
     }
 </style>
+
+
+<div class="account-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <img src="{{asset("FrontImg/Front photo.png")}}" width="100%">
+            </div>
+            <div class="col-2">
+                <div class="form-container">
+                    <span><a href="/">Login</a></span>
+                    <span> <a href="/register">Register</span></a>
+                    @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{$error}}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                    <form action="{{route('register.store')}}" method="POST">
+                        @csrf
+                        <div class="{{ $errors->any()?'input-container-error':'input-container' }}">
+                        <input type="text" placeholder="Username" name="name">
+                        <input type="email" placeholder="Email" name="email">
+                        <input type="password" placeholder="Password" name="password">
+                        <button type="submit" class="btn">Sign Up</button>
+                    </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        </div>
+</div>
 

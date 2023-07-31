@@ -8,7 +8,6 @@
         if($user_products){ // if there are products that the user has added
             $ids_of_products = array_column($user_products->toArray(),'prod_id');//extract only the ids from the array
             //convert the user_products object into array because array_column works with arrays only
-            //array_column ko barema hera docs ma
         }else{//if there are no products added to compare by this user
             $ids_of_products = []; //keep this variable empty
         }
