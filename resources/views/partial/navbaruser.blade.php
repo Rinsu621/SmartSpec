@@ -54,7 +54,7 @@
     font-style: normal; /* Adjust as needed */
     }
     *{
-        margin: 5px;
+        margin: 0;
         padding: 0;
         box-sizing: border-box;
         font-family: 'Anderson Grotesk', sans-serif;

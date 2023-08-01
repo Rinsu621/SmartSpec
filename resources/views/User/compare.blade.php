@@ -159,7 +159,7 @@
       <th>Action:</th>
         @foreach ($user_compare_products as $item)
           <td>
-            <button class="remove-compare" data-productid="{{$item->id}}" >Remove</button>
+            <button class="remove-compare" data-productid="{{$item->id}}" onclick="confirmRemove()">Remove</button>
           </td>
         @endforeach
     </tr>
@@ -167,7 +167,18 @@
 
 <?php  }?>
 
-
+<script>
+     function confirmRemove()
+    {
+        if(confirm('Are you sure you want to Remove?'))
+    {
+    document.getElementById('deleteForm').submit();
+    }
+    else{
+        return false;
+    }
+}
+</script>
 
 
 @endsection

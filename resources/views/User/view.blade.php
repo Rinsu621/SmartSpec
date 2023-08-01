@@ -194,7 +194,7 @@
         border-radius: 50px;
         font-size: 14px;
         width: 90px;
-        padding-left: 25px;
+        padding-left: 28px;
     }
 
     .detail:hover {
