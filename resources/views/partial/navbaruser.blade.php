@@ -23,10 +23,17 @@
                 <input type="text" placeholder="search anything" name="search">
                 <button type="submit" name="search" class="btn"><i class="fas fa-search"></i></button>
             </form>
+            @if(Auth::check())
             <form action="{{route('logout')}}" method="POST">
                 @csrf
                 <button type="submit" name="logout" class="logout" onclick="confirmLogout()" >Logout</button>
             </form>
+            @else
+            <form action="{{route('loginPage')}}" method="GET">
+                @csrf
+                <button type="submit" name="login" class="login" >Login</button>
+            </form>
+            @endif
     </header>
 
 </html>
@@ -146,6 +153,27 @@
         margin-right: 30px;
         cursor: pointer;
 
+    }
+
+    .login
+    {
+        display: inline-block;
+        width: 80%;
+        height: 40px;
+        border: none;
+        background-color: #F2F2F2;
+        padding: 5px 40px;
+        border-radius: 20px;
+        margin: 20px 0;
+        margin-right: 30px;
+        cursor: pointer;
+    }
+
+    .login:hover{
+        background-color: transparent;
+        border: 2px solid  #F2F2F2;
+        color: #F2f2f2;
+        transition:  0.3s;
     }
     .logout:hover{
         background-color: transparent;

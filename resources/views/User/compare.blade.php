@@ -8,7 +8,9 @@
         echo 'You have not added any products to compare';
     }else{ ?>
 
-
+<form action="{{route('index.page')}}" method="GET">
+    <button type="submit" class="add-more" name="add-more">Add More</button>
+</form>
 <table style="width:100%">
     <tr>
       <th>Image</th>
@@ -238,6 +240,22 @@
         background-color: rgb(125, 9, 9) ;
         color: #f2f2f2;
 
+    }
+    .add-more
+    {
+        display: inline-block;
+        width: 8%;
+        height: 40px;;
+        border: none;
+        background-color: #1B5D6B;
+        padding: 8px;
+        border-radius: 25px;
+        cursor: pointer;
+        margin-left: 50px;
+        margin-top: 50px;
+
+        font-size: 15px;
+        color: #F2F2F2;
     }
     @media (max-width: 768px) {
         table {

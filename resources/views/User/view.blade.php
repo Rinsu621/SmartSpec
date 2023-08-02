@@ -74,7 +74,8 @@
                                     class="card-image">
                             </div>
                             <div class="card-footer">
-                                <a href="#" class="detail" onclick="togglePopup('detail{{ $spec->id }}')">Detail</a>
+                                {{-- <a href="#" class="detail" onclick="togglePopup('detail{{ $spec->id }}')">Detail</a> --}}
+                                <button class="detail" onclick="togglePopup('detail{{ $spec->id }}')">Detail</button>
                                     @php
                                         $added = 0; //this is a boolean to know if the user has already added this profuct in compare or not
                                         if(!empty($ids_of_products)){ // check if the variable is empty ot not
@@ -84,11 +85,13 @@
                                             //if the spec id doesnot exist in the array then leave it as it is
                                         }
                                     @endphp
+                                    <form action="{{route('compare.home')}}" method="GET">
                                 <button class="compare" data-productId="{{ $spec->id }}" id="compare"
-                                    {{$added==1?'style=background:green':''}}
+                                    {{$added==1?'style=background:green':''}}  onclick="addToCompare({{ $spec->id }})"
                                     {{-- the above is nothing but an if else check of the boolean --}}
                                     {{-- if the product is already added to compare then it appears red --}}
                                     >Compare</button>
+                                </form>
                             </div>
                         </div>
                     @endforeach
@@ -135,6 +138,8 @@
     @endforeach
 
     </div>
+
+
 @endsection
 
 <style>
@@ -182,19 +187,24 @@
 
     .card-footer {
         display: flex;
+        justify-content: space-evenly;
         gap: 30px;
         margin-top: 10px;
     }
 
     .detail {
-        background-color: #1B5D6B;
+        cursor: pointer;
+        border: none;
+        background-color: #15657c;
         text-decoration: none;
-        padding: 10px 20px;
         color: #F2F2F2;
-        border-radius: 50px;
+        border-radius: 30px;
         font-size: 14px;
+        padding-left: 15px;
+        padding-right: 15px;
         width: 90px;
-        padding-left: 28px;
+        height: 40px;
+        margin-top: 5px;
     }
 
     .detail:hover {
@@ -463,4 +473,5 @@
             button.textContent = cards.length > 4 ? 'View More' : 'View Less';
         });
     });
+
 </script>

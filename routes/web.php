@@ -6,6 +6,7 @@ Use App\Http\Controllers\BrandController;
 Use App\Http\Controllers\SpecController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CompareController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,9 @@ Route::get('/',[UserController::class,'loginPage'])->name('loginPage');
 Route::get('/home',[UserController::class,'home'])->name('index.page');
 Route::post('/login',[UserController::class,'attemptlogin'])->name('loginStore');
 Route::post('/logout',[UserController::class,'logout'])->name('logout');
+
+//admin
+Route::get('/admin',[AdminController::class,'admin'])->name('admin');
 
 //register
 Route::get('/register',[UserController::class,'create'])->name('register.create');
@@ -52,6 +56,6 @@ Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 
 //Compare
-Route::get('/compare',[CompareController::class, 'index']);
+Route::get('/compare',[CompareController::class, 'index'])->name('compare.home');
 Route::post('/addToCompare',[CompareController::class,'addToCompare'])->name('compare.add');
 Route::post('/removeFromCompare',[CompareController::class,'removeFromCompare'])->name('compare.remove');
