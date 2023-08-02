@@ -31,7 +31,7 @@
         .form-container{
             background-color: #f2f2f2;
             width: 400px;
-            height: 320px;
+            height: 350px;
             padding: 20px;
             align-self:center;
             border-radius: 20px;
@@ -83,18 +83,72 @@
                 display: flex;
                 margin-left: 20%;
              }
-    </style>
-</head>
+
+             .alert-danger
+                 {
+                     background-color: #f8d7da;
+                     color:#721c24;
+                     border: 1px solid #f5c6cb;
+                      padding: 10px;
+                      border-radius: 4px;
+                      margin-top: 20px;
+                            }
+
+            .alert-danger ul {
+              list-style-type: none;
+              margin: 0;
+              padding: 0;
+            }
+            .alert-success ul {
+              list-style-type: none;
+              margin: 0;
+              padding: 0;
+            }
+
+            .alert-success li {
+              margin-left: 20px;
+            }
+
+            .alert-danger li {
+              margin-left: 20px;
+            }
+            .alert-success {
+              background-color: #d4edda;
+              color: #155724;
+              border: 1px solid #c3e6cb;
+              padding: 10px;
+              border-radius: 4px;
+              margin-top: 20px;
+            }
+ </style>
+ </head>
 <body>
     <div class="account-page">
         <div class="image">
             <img src="{{asset('logo/Final-logo.png')}}" alt="" style="width:100%; margin: 0" >
         </div>
         <div class="form-container">
-            <form action="">
+
+            <form action="{{route('admin.store')}}" method="POST">
+                @csrf
                 <h2><center>Admin Login</center></h2>
-                <input type="text" placeholder="Username">
-                <input type="password" placeholder="Password">
+                  @if(session('success'))
+            <div class="alert alert-success">
+                {{session('success')}}
+            </div>
+            @endif
+            @if($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach($errors->all() as $error)
+                    <li>{{$error}}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+                <div class="{{ $errors->any()?'input-container-error':'input-container' }}">
+                <input type="text" placeholder="Username" name="name">
+                <input type="password" name="password" placeholder="Password">
                <button type="submit" class="btn">Login</button>
             </form>
         </div>

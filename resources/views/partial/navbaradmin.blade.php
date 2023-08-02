@@ -24,11 +24,12 @@
                 <input type="text" placeholder="search anything" name="search">
                 <button type="submit" name="search" class="btn"><i class="fas fa-search"></i></button>
             </form>
-            <form action="{{route('logout')}}" method="POST">
+            <form action="{{route('admin.logout')}}" method="POST">
                 @csrf
                 <button type="submit" name="logout" class="logout" onclick="confirmLogout()">Logout</button>
             </form>
-            {{-- <div class="menu-btn">&#9776;</div> --}}
+           
+
     </header>
 
 </html>
@@ -155,6 +156,26 @@
         color: #F2f2f2;
         transition:  0.3s;
     }
+    .login
+    {
+        display: inline-block;
+        width: 80%;
+        height: 40px;
+        border: none;
+        background-color: #F2F2F2;
+        padding: 5px 40px;
+        border-radius: 20px;
+        margin: 20px 0;
+        margin-right: 30px;
+        cursor: pointer;
+
+    }
+    .login:hover{
+        background-color: transparent;
+        border: 2px solid  #F2F2F2;
+        color: #F2f2f2;
+        transition:  0.3s;
+    }
 
     nav a::before{
         content:'';
@@ -214,6 +235,11 @@
             padding: 5px 20px;
         }
         .logout
+        {
+            width:100%;
+            padding: 5px 20px;
+        }
+         .login
         {
             width:100%;
             padding: 5px 20px;

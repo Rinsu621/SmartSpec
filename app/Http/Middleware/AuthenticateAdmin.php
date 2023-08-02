@@ -2,15 +2,16 @@
 
 namespace App\Http\Middleware;
 
-use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class Authenticate extends Middleware
+class AuthenticateAdmin
 {
     public function handle($request, Closure $next)
     {
         if (!Auth::check()) {
-            return redirect()->route('login'); 
+            return redirect()->route('admin'); // Redirect to /admin login page if the user is not authenticated
         }
 
         return $next($request);

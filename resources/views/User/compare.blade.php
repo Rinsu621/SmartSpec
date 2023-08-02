@@ -7,7 +7,13 @@
     if(!$user_compare_products){
         echo 'You have not added any products to compare';
     }else{ ?>
+@if ($user_compare_products->isEmpty())
 
+<form action="{{route('index.page')}}" method="GET">
+    <button type="submit" class="add-more" name="add-more">Add</button>
+</form>
+<h2 class="message"><center>You have not added any products to compare</center></h2>
+@else
 <form action="{{route('index.page')}}" method="GET">
     <button type="submit" class="add-more" name="add-more">Add More</button>
 </form>
@@ -166,6 +172,7 @@
         @endforeach
     </tr>
   </table>
+  @endif
 
 <?php  }?>
 
@@ -256,6 +263,10 @@
 
         font-size: 15px;
         color: #F2F2F2;
+    }
+    .message
+    {
+        color: #1B5D6B;
     }
     @media (max-width: 768px) {
         table {

@@ -20,13 +20,14 @@ use App\Http\Controllers\AdminController;
 */
 //login
 Route::get('/',[UserController::class,'loginPage'])->name('loginPage');
-Route::get('/home',[UserController::class,'home'])->name('index.page');
+Route::get('/home',[UserController::class,'home'])->name('index.page')->middleware('auth.user');
 Route::post('/login',[UserController::class,'attemptlogin'])->name('loginStore');
 Route::post('/logout',[UserController::class,'logout'])->name('logout');
 
 //admin
 Route::get('/admin',[AdminController::class,'admin'])->name('admin');
-
+Route::post('/admin',[AdminController::class,'attemptLogin'])->name('admin.store');
+Route::post('/admin/logout',[AdminController::class,'logout'])->name('admin.logout');
 //register
 Route::get('/register',[UserController::class,'create'])->name('register.create');
 Route::post('/register',[UserController::class,'store'])->name('register.store');
@@ -42,13 +43,12 @@ Route::put('/brand/{id}',[BrandController::class,'update']);
 Route::get('/brand/search', 'BrandController@search');
 
 
-Route::get('/spec',[SpecController::class,'index'])->name('spec.view');
+Route::get('/spec',[SpecController::class,'index'])->name('spec.view')->middleware('auth.admin');
 Route::get('/spec/create',[SpecController::class,'create'])->name('specCreate');
 Route::post('/spec',[SpecController::class,'store'])->name('specStore');
 Route::delete('/spec/{id}',[SpecController::class,'destroy']);
 Route::get('/spec/{id}/edit',[SpecController::class,'edit']);
 Route::put('/spec/{id}',[SpecController::class,'update']);
-
 
 // Route::get('/add-rating',)
 
