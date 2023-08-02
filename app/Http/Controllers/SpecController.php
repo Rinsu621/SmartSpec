@@ -11,7 +11,7 @@ class SpecController extends Controller
 {
     public function index()
     {
-        $specs=Spec::all();
+        $specs=Spec::paginate(10);
         return view('Spec.view')->with(compact('specs'));
     }
 

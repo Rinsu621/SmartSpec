@@ -29,9 +29,12 @@
         </tr>
     </thead>
     <tbody class="info">
+        @php
+            $initialSerialNumber=($brands->currentPage()-1)*$brands->perPage();
+        @endphp
         @foreach ($brands as $brand)
         <tr>
-           <td>{{$loop->iteration}}</td>
+           <td>{{$initialSerialNumber +$loop->iteration}}</td>
            <td>{{$brand->name}}</td>
            <td>
             <button class="edit-btn-first" type="submit" onclick="togglePopup('edit')">Edit</button>
@@ -64,7 +67,9 @@
     </tbody>
 </table>
  </div>
-
+  <div class="pagination">
+       {{$brands->links()}}
+      </div>
 </div>
 <script>
     function confirmDelete()
@@ -343,6 +348,29 @@
     .popup-form-create[style="display: block;"] + #overlay,
     .popup-form-edit[style="display: block;"] + #overlay {
         display: block;
+    }
+     .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+        margin-top: 20px;
+    }
+
+    .pagination .page-item .page-link {
+        color: #fff; /* Text color of pagination links */
+        background-color: #1B5D6B; /* Desired background color (Green) */
+        border-color: #1B5D6B; /* Border color of pagination links (Green) */
+    }
+
+    .pagination .page-item .page-link:hover {
+        background-color: #1a7e94; /* Hover background color (Darker Green) */
+        border-color: #f2f2f2; /* Hover border color (Darker Green) */
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #1a7e94; /* Active page background color (Darker Green) */
+        border-color: #f2f2f2; /* Active page border color (Darker Green) */
     }
 
 </style>

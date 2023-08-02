@@ -24,9 +24,13 @@
                 </tr>
             </thead>
             <tbody class="info">
+                @php
+                // Calculate the initial serial number for each page
+                $initialSerialNumber = ($specs->currentPage() - 1) * $specs->perPage();
+                @endphp
                 @foreach($specs as $spec)
                 <tr>
-                    <td>{{$loop->iteration}}</td>
+                    <td>{{$initialSerialNumber +$loop->iteration}}</td>
                     <td>{{$spec->name}}</td>
                     <td>{{$spec->brand->name}}</td>
                     <td>{{$spec->launch}}</td>
@@ -41,7 +45,12 @@
                 @endforeach
             </tbody>
         </table>
-
+    </div>
+    <div class="pagination">
+       {{$specs->links()}}
+      </div>
+</div>
+</div>
         @foreach ($specs as $spec)
         <div class="popup-detail" id="detail{{$spec->id}}" style="display: none;">
         <div class="back-arrow" onclick="togglePopup('detail{{$spec->id}}')">
@@ -303,5 +312,30 @@ p
     .popup-detail[style="display: block;"] + #overlay {
         display: block;
     }
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 2px;
+        margin-top: 20px;
+    }
+
+    .pagination .page-item .page-link {
+        color: #fff; /* Text color of pagination links */
+        background-color: #1B5D6B; /* Desired background color (Green) */
+        border-color: #1B5D6B; /* Border color of pagination links (Green) */
+    }
+
+    .pagination .page-item .page-link:hover {
+        background-color: #1a7e94; /* Hover background color (Darker Green) */
+        border-color: #f2f2f2; /* Hover border color (Darker Green) */
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #1a7e94; /* Active page background color (Darker Green) */
+        border-color: #f2f2f2; /* Active page border color (Darker Green) */
+    }
+
+
 </style>
 
