@@ -34,28 +34,34 @@ Route::post('/register',[UserController::class,'store'])->name('register.store')
 
 
 //brand
-Route::get('/brand',[BrandController::class,'index'])->name('brand.view');
-// Route::get('/brand/create',[BrandController::class,'create'])->name('brand.create');
-Route::post('/brand',[BrandController::class,'store'])->name('brand.store');
-Route::delete('/brand/{id}',[BrandController::class,'destroy'])->name('brand.destroy');
-Route::get('/brand/{id}/edit',[BrandController::class,'edit']);
-Route::put('/brand/{id}',[BrandController::class,'update']);
-Route::get('/brand/search', 'BrandController@search');
 
-
-Route::get('/spec',[SpecController::class,'index'])->name('spec.view')->middleware('auth.admin');
+// Route::middleware(['appadmin.auth'])->group(function () {
+Route::get('/spec',[SpecController::class,'index'])->name('spec.view');
 Route::get('/spec/create',[SpecController::class,'create'])->name('specCreate');
 Route::post('/spec',[SpecController::class,'store'])->name('specStore');
 Route::delete('/spec/{id}',[SpecController::class,'destroy']);
 Route::get('/spec/{id}/edit',[SpecController::class,'edit']);
 Route::put('/spec/{id}',[SpecController::class,'update']);
 
+Route::get('/brand',[BrandController::class,'index'])->name('brand.view');
+// Route::get('/brand/create',[BrandController::class,'create'])->name('brand.create');
+Route::post('/brand',[BrandController::class,'store'])->name('brand.store');
+Route::delete('/brand/{id}',[BrandController::class,'destroy'])->name('brand.destroy');
+Route::get('/brand/{id}/edit',[BrandController::class,'edit']);
+Route::put('/brand/{id}',[BrandController::class,'update']);
+// });
+
 // Route::get('/add-rating',)
 
-Route::get('/search', [SearchController::class, 'search'])->name('search');
+Route::get('/admin/search', [SearchController::class, 'adminSearch'])->name('admin.search');
+Route::get('/user/search', [SearchController::class, 'userSearch'])->name('user.search');
 
 
 //Compare
 Route::get('/compare',[CompareController::class, 'index'])->name('compare.home');
 Route::post('/addToCompare',[CompareController::class,'addToCompare'])->name('compare.add');
 Route::post('/removeFromCompare',[CompareController::class,'removeFromCompare'])->name('compare.remove');
+
+//dropdown
+Route::get
+('/brands/{brand}',[UserController::class, 'dropdown'])->name('show_brand_cards');

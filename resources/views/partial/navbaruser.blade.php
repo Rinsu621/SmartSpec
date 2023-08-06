@@ -7,21 +7,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <title>Document</title>
 </head>
+@php
+$uniqueBrands = $specs->pluck('brand.name')->unique();
+@endphp
 <body>
     <header>
 
         <a href="/home" class="logo"><img src="{{asset('logo/Final-logo.png')}}" width="100px" height="70px"></a>
         <nav>
-            <div class="nav-item">
-            <a href="/home">Smartphone</a>
-            <a href="/compare">Compare</a>
-        </div>
+            <ul class="navbar">
+                <li class="nav-item">
+                  <a href="/home" >Smartphone</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/compare" >Compare</a>
+                </li>
+                <li class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" id="brandsDropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    Brands
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="brandsDropdown">
+                    @foreach ($uniqueBrands as $brand)
+                      <li class="drop-brand"><a href="#">{{ $brand }}</a></li>
+                    @endforeach
+                  </ul>
+                </li>
+              </ul>
         </nav>
 
-            <form action="">
+            <form action="{{route('user.search')}}" method="GET">
                 @csrf
-                <input type="text" placeholder="search anything" name="search">
-                <button type="submit" name="search" class="btn"><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Search Smartphone" name="search">
+                <button type="submit" name="query" class="btn"><i class="fas fa-search"></i></button>
             </form>
             @if(Auth::check())
             <form action="{{route('logout')}}" method="POST">
@@ -49,6 +66,43 @@
         return false;
     }
 }
+
+// function showDropdown() {
+//     const dropdownMenu = document.querySelector('.dropdown-menu');
+//     dropdownMenu.style.display = 'block';
+//   }
+//   function hideDropdown() {
+//     hideTimer = setTimeout(() => {
+//       const dropdownMenu = document.querySelector('.dropdown-menu');
+//       dropdownMenu.style.display = 'none';
+//     }, 500); // Set the delay (in milliseconds) before hiding the dropdown
+//   }
+let dropdownOpen = false;
+
+  function toggleDropdown() {
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    dropdownOpen = !dropdownOpen;
+    dropdownMenu.style.display = dropdownOpen ? 'block' : 'none';
+
+    if (dropdownOpen) {
+      // Close the dropdown if user clicks outside the dropdown menu
+      document.addEventListener('click', closeDropdownOutside);
+    } else {
+      // Remove the click event listener when the dropdown is closed
+      document.removeEventListener('click', closeDropdownOutside);
+    }
+  }
+
+  function closeDropdownOutside(event) {
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    if (!dropdownMenu.contains(event.target)) {
+      // If the click is outside the dropdown menu, close the dropdown
+      dropdownOpen = false;
+      dropdownMenu.style.display = 'none';
+      document.removeEventListener('click', closeDropdownOutside);
+    }
+  }
+
 </script>
 
 <style>
@@ -89,7 +143,8 @@
         font-weight: bold;
         margin-left: 50px;
         transition: .3s;
-        position: relative;
+        display: inline-block;
+
     }
 
 
@@ -98,6 +153,7 @@
     {
         color: #c8c9c9;
         text-decoration: none;
+        border-bottom: 2px solid #c8c9c9;
     }
 
     .nav-links
@@ -195,10 +251,50 @@
         text-decoration: none;
     }
 
-    nav a:hover::before
-    {
-        width:100%;
-    }
+    .navbar {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-item {
+  margin-right: 20px;
+}
+
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Dropdown Styles */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  padding: 10px;
+  color: #1b5d6b;
+}
+.drop-brand a {
+  color: #1b5d6b; /* Set the color to #1b5d6b */
+  text-decoration: none;
+  align-content: center;
+  list-style: none;
+  margin-left: 30px;
+}
+.drop-brand a:hover {
+  color: #1b5d6b; /* Set the color to #1b5d6b */
+  text-decoration: none;
+  border-bottom: 2px solid #1b5d6b;
+  margin-left: 20px;
+}
+
+
+.nav-item:hover .dropdown-menu {
+  display: block;
+}
+
+
     @media (max-width: 768px) {
             header {
                 padding: 5px;

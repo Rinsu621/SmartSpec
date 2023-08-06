@@ -3,19 +3,26 @@
 namespace App\Http\Controllers;
 use App\Models\Brand;
 use App\Models\Spec;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function search(Request $request)
+    public function adminSearch()
     {
-        $searchQuery = $request->input('search');
+        $search_text=$GET['search'];
+        $specs=Spec::where('title','LIKE','%'.$search_text.'%')->get();
+        $brands=Brand::where('title','LIKE','%'.$search_text.'%')->get();
 
-        // Perform the search for both Brand and Spec models
-        $brands = Brand::where('name', 'LIKE', '%' . $searchQuery . '%')->get();
-        $specs = Spec::where('name', 'LIKE', '%' . $searchQuery . '%')->get();
-
-        return view('search-results')->with(compact('brands', 'specs'));
+        return view('Search.admin',compact('specs','brands'));
     }
+    public function userSearch(Request $request)
+    {
+       $query=$request->input('query');
+       $results=Spec::where('name','LIKE',"%$query%")->get();
+       return view('Search.user',['results'=>$results]);
+    }
+
+
 }

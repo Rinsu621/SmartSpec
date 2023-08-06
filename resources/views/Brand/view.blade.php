@@ -358,19 +358,21 @@
     }
 
     .pagination .page-item .page-link {
-        color: #fff; /* Text color of pagination links */
-        background-color: #1B5D6B; /* Desired background color (Green) */
+        color: #1B5D6B; /* Text color of pagination links */
+        background-color: #ffff; /* Desired background color (Green) */
         border-color: #1B5D6B; /* Border color of pagination links (Green) */
     }
 
     .pagination .page-item .page-link:hover {
-        background-color: #1a7e94; /* Hover background color (Darker Green) */
-        border-color: #f2f2f2; /* Hover border color (Darker Green) */
+        background-color: #1B5D6B; /* Hover background color (Darker Green) */
+        border-color: #ffff; /* Hover border color (Darker Green) */
+        color: #fff;
     }
 
     .pagination .page-item.active .page-link {
-        background-color: #1a7e94; /* Active page background color (Darker Green) */
-        border-color: #f2f2f2; /* Active page border color (Darker Green) */
+        background-color: #1B5D6B; /* Active page background color (Darker Green) */
+        border-color: #ffff; /* Active page border color (Darker Green) */
+        color: #fff
     }
 
 </style>

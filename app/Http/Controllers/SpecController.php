@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Spec;
 use App\Models\Brand;
 use Illuminate\Support\Facades\Validator;

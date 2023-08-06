@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="{{asset('logo/logo2.png')}}">
+    <title>Document</title>
+
 <style>
     @font-face {
   font-family: 'Anderson Grotesk';
@@ -93,7 +102,7 @@
   form input
   {
       padding: 10px;
-      width: 100%;
+      width: 92%;
       height: 40px;
       margin: 20px 0;
       padding: 0 10px;
@@ -168,6 +177,10 @@
   }
 
 </style>
+</head>
+<body>
+
+
 <div class="account-page">
     <div class="container">
         <div class="row">
@@ -208,5 +221,7 @@
         </div>
         </div>
 </div>
+</body>
+</html>
 
 

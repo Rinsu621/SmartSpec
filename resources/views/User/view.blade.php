@@ -13,45 +13,7 @@
         }
 
     @endphp
-    @foreach ($uniqueBrands as $brand)
-        @foreach ($specs->where('brand.name', $brand) as $spec)
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <form action="{{ url('/add-rating') }}" method="POST">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Rate {{ $spec->name }} Mobile</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="rating-css">
-                                    <div class="star-icon">
-                                        <input type="radio" value="1" name="product_rating" checked id="rating1">
-                                        <label for="rating1" class="fa fa-star"></label>
-                                        <input type="radio" value="2" name="product_rating" id="rating2">
-                                        <label for="rating2" class="fa fa-star"></label>
-                                        <input type="radio" value="3" name="product_rating" id="rating3">
-                                        <label for="rating3" class="fa fa-star"></label>
-                                        <input type="radio" value="4" name="product_rating" id="rating4">
-                                        <label for="rating4" class="fa fa-star"></label>
-                                        <input type="radio" value="5" name="product_rating" id="rating5">
-                                        <label for="rating5" class="fa fa-star"></label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn-close" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn-save">Submit</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        @endforeach
-    @endforeach
+
     <div id="overlay" class="overlay"></div>
     @include('partial.carousal')
 
@@ -309,35 +271,6 @@
         display: block;
     }
 
-    .rating-css div {
-        color: #ffe400;
-        font-size: 30px;
-        font-family: sans-serif;
-        font-weight: 800;
-        text-align: center;
-        text-transform: uppercase;
-        padding: 20px 0;
-    }
-
-    .rating-css input {
-        display: none;
-    }
-
-    .rating-css input+label {
-        font-size: 60px;
-        text-shadow: 1px 1px 0 #8f8420;
-        cursor: pointer;
-    }
-
-    .rating-css input:checked+label~label {
-        color: #b4afaf;
-    }
-
-    .rating-css label:active {
-        transform: scale(0.8);
-        transition: 0.3s ease;
-    }
-
     .btn-rate {
         width: 35%;
         height: 40px;
@@ -355,37 +288,7 @@
         color: #F2F2F2;
     }
 
-    .btn-save {
-        width: 20%;
-        height: 40px;
-        ;
-        border: none;
-        background-color: #1B5D6B;
-        padding-top: 10px;
-        padding-left: 20px;
-        border-radius: 15px;
-        margin: 20px 0;
-        cursor: pointer;
-        display: flex;
 
-        font-size: 15px;
-        color: #F2F2F2;
-    }
-
-    .btn-close {
-        width: 15%;
-        height: 40px;
-        ;
-        border: none;
-        background-color: #919394;
-        border-radius: 15px;
-        padding-left: 13px;
-        padding-top: 10px;
-        cursor: pointer;
-        display: flex;
-        font-size: 15px;
-        color: #F2F2F2;
-    }
 
     .modal-title {
         color: #1B5D6B;

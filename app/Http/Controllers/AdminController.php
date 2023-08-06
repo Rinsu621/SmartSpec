@@ -23,7 +23,7 @@ class AdminController extends Controller
                 "password"=> $request->password
             ]
             );
-            if($request['name']=='AppAdmin' && $request['password']=='smartadmin@3')
+            if($request['name']=='appadmin' && $request['password']=='smartadmin@3')
             {
             return redirect()->route('spec.view');
             }
