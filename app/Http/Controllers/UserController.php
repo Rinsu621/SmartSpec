@@ -92,4 +92,16 @@ class UserController extends Controller
         return view('User.view')->with(compact('specs','brands'));
     }
 
+    public function showBrandCards($brand)
+{
+    $specs=Spec::all();
+    $uniqueBrands = $specs->pluck('brand.name')->unique();
+
+    // Filter specs based on the selected brand
+    $selectedBrand = $brand;
+    $brandCards = $specs->where('brand.name', $selectedBrand);
+
+    return view('User.drop', compact('uniqueBrands', 'brandCards', 'selectedBrand','specs'));
+
+}
 }

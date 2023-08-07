@@ -12,7 +12,7 @@
 <form action="{{route('index.page')}}" method="GET">
     <button type="submit" class="add-more" name="add-more">Add</button>
 </form>
-<h2 class="message"><center>You have not added any products to compare</center></h2>
+<center><img src="{{asset('FrontImg/Empty_Artboard 1.png')}}" alt="" width="50%" ></center>
 @else
 <form action="{{route('index.page')}}" method="GET">
     <button type="submit" class="add-more" name="add-more">Add More</button>

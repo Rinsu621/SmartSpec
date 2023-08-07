@@ -63,5 +63,4 @@ Route::post('/addToCompare',[CompareController::class,'addToCompare'])->name('co
 Route::post('/removeFromCompare',[CompareController::class,'removeFromCompare'])->name('compare.remove');
 
 //dropdown
-Route::get
-('/brands/{brand}',[UserController::class, 'dropdown'])->name('show_brand_cards');
+Route::get('/show_brand_cards/{brand}', [UserController::class,'showBrandCards'])->name('show_brand_cards');

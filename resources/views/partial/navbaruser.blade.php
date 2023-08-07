@@ -28,7 +28,7 @@ $uniqueBrands = $specs->pluck('brand.name')->unique();
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="brandsDropdown">
                     @foreach ($uniqueBrands as $brand)
-                      <li class="drop-brand"><a href="#">{{ $brand }}</a></li>
+                      <li class="drop-brand"><a href="{{route('show_brand_cards',['brand'=>$brand])}}">{{ $brand }}</a></li>
                     @endforeach
                   </ul>
                 </li>
@@ -67,41 +67,7 @@ $uniqueBrands = $specs->pluck('brand.name')->unique();
     }
 }
 
-// function showDropdown() {
-//     const dropdownMenu = document.querySelector('.dropdown-menu');
-//     dropdownMenu.style.display = 'block';
-//   }
-//   function hideDropdown() {
-//     hideTimer = setTimeout(() => {
-//       const dropdownMenu = document.querySelector('.dropdown-menu');
-//       dropdownMenu.style.display = 'none';
-//     }, 500); // Set the delay (in milliseconds) before hiding the dropdown
-//   }
-let dropdownOpen = false;
 
-  function toggleDropdown() {
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-    dropdownOpen = !dropdownOpen;
-    dropdownMenu.style.display = dropdownOpen ? 'block' : 'none';
-
-    if (dropdownOpen) {
-      // Close the dropdown if user clicks outside the dropdown menu
-      document.addEventListener('click', closeDropdownOutside);
-    } else {
-      // Remove the click event listener when the dropdown is closed
-      document.removeEventListener('click', closeDropdownOutside);
-    }
-  }
-
-  function closeDropdownOutside(event) {
-    const dropdownMenu = document.querySelector('.dropdown-menu');
-    if (!dropdownMenu.contains(event.target)) {
-      // If the click is outside the dropdown menu, close the dropdown
-      dropdownOpen = false;
-      dropdownMenu.style.display = 'none';
-      document.removeEventListener('click', closeDropdownOutside);
-    }
-  }
 
 </script>
 
@@ -274,6 +240,7 @@ let dropdownOpen = false;
   background-color: #fff;
   padding: 10px;
   color: #1b5d6b;
+  transition-duration: 0.9s;
 }
 .drop-brand a {
   color: #1b5d6b; /* Set the color to #1b5d6b */
