@@ -9,20 +9,28 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    public function adminSearch()
-    {
-        $search_text=$GET['search'];
-        $specs=Spec::where('title','LIKE','%'.$search_text.'%')->get();
-        $brands=Brand::where('title','LIKE','%'.$search_text.'%')->get();
 
-        return view('Search.admin',compact('specs','brands'));
+    public function adminSearch(Request $request)
+    {
+        $searchQuery = $request->input('query');
+
+        // Perform the database query to search for the mobile with the given name
+        $result = Spec::where('name', 'like', '%' . $searchQuery . '%')->paginate(10);
+        $brands=Brand::all();
+
+        // Pass the search results to the new view
+        return view('Search.admin', compact('result','brands'));
     }
+
     public function userSearch(Request $request)
     {
-       $query=$request->input('query');
-       $results=Spec::where('name','LIKE',"%$query%")->get();
-       return view('Search.user',['results'=>$results]);
+        $searchQuery = $request->input('data');
+        // Perform the database query to search for the mobile with the given name
+        $result = Spec::where('name', 'like', '%' . $searchQuery . '%')->get();
+        $brands = Brand::all();
+        $specs = Spec::all();
+
+        // Pass the search results and search query to the new view
+        return view('Search.user', compact('result', 'searchQuery', 'brands', 'specs'));
     }
-
-
 }

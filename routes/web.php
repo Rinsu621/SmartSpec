@@ -64,3 +64,7 @@ Route::post('/removeFromCompare',[CompareController::class,'removeFromCompare'])
 
 //dropdown
 Route::get('/show_brand_cards/{brand}', [UserController::class,'showBrandCards'])->name('show_brand_cards');
+
+//search
+Route::get('/spec/adminsearch',[SearchController::class,'adminSearch'])->name('admin.search');
+Route::get('/home/usersearch',[SearchController::class,'userSearch'])->name('user.search');

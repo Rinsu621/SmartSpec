@@ -313,13 +313,13 @@
     </style>
 
     <script>
-        function confirmDelete(iteration) {
-            if (confirm('Are you sure you want to delete this Specification?')) {
-                document.getElementById('deleteForm' + iteration).submit();
-            } else {
-                return false;
-            }
-        }
+        // function confirmDelete(iteration) {
+        //     if (confirm('Are you sure you want to delete this Specification?')) {
+        //         document.getElementById('deleteForm' + iteration).submit();
+        //     } else {
+        //         return false;
+        //     }
+        // }
 
         function togglePopup(popupId) {
             var popupdetail = document.getElementById(popupId);
@@ -336,29 +336,29 @@
             }
         }
 
-        function showMore(button) {
-            var cardContainer = button.parentElement.previousElementSibling;
-            var cards = cardContainer.querySelectorAll('.card');
+        // function showMore(button) {
+        //     var cardContainer = button.parentElement.previousElementSibling;
+        //     var cards = cardContainer.querySelectorAll('.card');
 
-            cards.forEach(function(card, index) {
-                if (index >= 4) {
-                    card.style.display = card.style.display === 'block' ? 'none' : 'block';
-                }
-            });
+        //     cards.forEach(function(card, index) {
+        //         if (index >= 4) {
+        //             card.style.display = card.style.display === 'block' ? 'none' : 'block';
+        //         }
+        //     });
 
-            button.textContent = button.textContent === 'View Less' ? 'View More' : 'View Less';
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            var buttons = document.querySelectorAll('.view-more-btn');
-            buttons.forEach(function(button) {
-                var cardContainer = button.parentElement.previousElementSibling;
-                var cards = cardContainer.querySelectorAll('.card');
+        //     button.textContent = button.textContent === 'View Less' ? 'View More' : 'View Less';
+        // }
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     var buttons = document.querySelectorAll('.view-more-btn');
+        //     buttons.forEach(function(button) {
+        //         var cardContainer = button.parentElement.previousElementSibling;
+        //         var cards = cardContainer.querySelectorAll('.card');
 
-                cards.forEach(function(card, index) {
-                    if (index >= 4) {
-                        card.style.display = 'none';
-                    }
-                });
+        //         cards.forEach(function(card, index) {
+        //             if (index >= 4) {
+        //                 card.style.display = 'none';
+        //             }
+        //         });
 
                 button.textContent = cards.length > 4 ? 'View More' : 'View Less';
             });

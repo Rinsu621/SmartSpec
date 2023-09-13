@@ -37,8 +37,8 @@ $uniqueBrands = $specs->pluck('brand.name')->unique();
 
             <form action="{{route('user.search')}}" method="GET">
                 @csrf
-                <input type="text" placeholder="Search Smartphone" name="search">
-                <button type="submit" name="query" class="btn"><i class="fas fa-search"></i></button>
+                <input type="text" placeholder="Search Smartphone" name="data">
+                <button type="submit" name="search" class="btn"><i class="fas fa-search"></i></button>
             </form>
             @if(Auth::check())
             <form action="{{route('logout')}}" method="POST">

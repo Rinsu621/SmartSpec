@@ -1,5 +1,6 @@
 @extends('layouts.layoutuser')
 @section('content')
+
     @php
         // Get unique brand names from specs data
         $uniqueBrands = $specs->pluck('brand.name')->unique();
@@ -16,11 +17,6 @@
 
     <div id="overlay" class="overlay"></div>
     @include('partial.carousal')
-
-
-    <div class="spec-view">
-
-
 
         @foreach ($uniqueBrands as $brand)
             <h3 class="brand-heading">{{ $brand }}</h3>
@@ -91,20 +87,74 @@
                 <p class="camera"><b>Camera:</b>{{ $spec->camera }}</p>
                 <p class="battery"><b>Battery:</b>{{ $spec->battery }}</p>
                 <p class="resistance"><b>Resistance:</b>{{ $spec->resistance }}</p>
-                <button type="button" class="btn-rate" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn-rate" data-toggle="modal" data-target="#exampleModal" data-mobile-name="{{ $spec->name }}">
                     Rate this Mobile
                 </button>
 
             </div>
+
         @endforeach
     @endforeach
 
     </div>
-
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form action="/add-rating" method="POST">
+            <div class="modal-header">
+                <h1 id="modalTitle" class="modal-title fs-5">Rate this</h1>
+            </div>
+            <div class="modal-body">
+                <div class="rating-css">
+                    <div class="star-icon">
+                        <input type="radio" value="1" name="product_rating" checked id="rating1">
+                        <label for="rating1" class="fa fa-star"></label>
+                        <input type="radio" value="2" name="product_rating" id="rating2">
+                        <label for="rating2" class="fa fa-star"></label>
+                        <input type="radio" value="3" name="product_rating" id="rating3">
+                        <label for="rating3" class="fa fa-star"></label>
+                        <input type="radio" value="4" name="product_rating" id="rating4">
+                        <label for="rating4" class="fa fa-star"></label>
+                        <input type="radio" value="5" name="product_rating" id="rating5">
+                        <label for="rating5" class="fa fa-star"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+             <button type="submit" class="btn-close">Close</button>
+               <button type="submit" class="btn-submit">Submit</button>
+          </div>
+        </form>
+        </div>
+      </div>
 
 @endsection
 
 <style>
+    .rating-css div {
+    color: #ffe400;
+    font-size: 30px;
+    font-family: sans-serif;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 20px 0;
+  }
+  .rating-css input {
+    display: none;
+  }
+  .rating-css input + label {
+    font-size: 60px;
+    text-shadow: 1px 1px 0 #8f8420;
+    cursor: pointer;
+  }
+  .rating-css input:checked + label ~ label {
+    color: #b4afaf;
+  }
+  .rating-css label:active {
+    transform: scale(0.8);
+    transition: 0.3s ease;
+  }
     .spec-view {
         margin-top: 20px;
     }
@@ -323,6 +373,42 @@
     .view-more-btn:hover {
         background-color: #15657c;
     }
+    .modal-title {
+    color: #1B5D6B;
+    font-weight: bold;
+    font-size: 16px; /* Adjust the font size as needed */
+}
+    .btn-close
+    {
+        cursor: pointer;
+        border: none;
+        border-radius: 20px;
+        background-color: #888888;
+        text-decoration: none;
+        color: #F2F2F2;
+        border-radius: 30px;
+        font-size: 14px;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 90px;
+        height: 40px;
+        margin-top: 5px;
+    }
+    .btn-submit
+    {
+        cursor: pointer;
+        border: none;
+        background-color: #15657c;
+        text-decoration: none;
+        color: #F2F2F2;
+        border-radius: 30px;
+        font-size: 14px;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 90px;
+        height: 40px;
+        margin-top: 5px;
+    }
 </style>
 
 <script>
@@ -376,5 +462,18 @@
             button.textContent = cards.length > 4 ? 'View More' : 'View Less';
         });
     });
+    function updateModalTitle(button) {
+    var mobileName = button.getAttribute('data-mobile-name');
+    var modalTitle = document.getElementById('modalTitle');
+    modalTitle.textContent = "Rate " + mobileName;
+}
+document.addEventListener('DOMContentLoaded', function() {
+    var rateButtons = document.querySelectorAll('.btn-rate');
+    rateButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            updateModalTitle(button);
+        });
+    });
+});
 
 </script>

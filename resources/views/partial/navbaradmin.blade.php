@@ -222,7 +222,7 @@
 
             <form action="{{route('admin.search')}}" method="GET">
                 @csrf
-                <input type="text" id="search" placeholder="Search Products" name="search">
+                <input type="text" id="search" placeholder="Search Products" name="query">
                 <button type="submit" name="search" class="btn"><i class="fas fa-search"></i></button>
             </form>
             <form action="{{route('admin.logout')}}" method="POST">
