@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\Spec;
 use App\Models\Brand;
 use App\Models\Compare;
+use App\Models\Rating;
 
 class CompareController extends Controller
 {
@@ -15,7 +16,22 @@ class CompareController extends Controller
 
     $specs=Spec::all();
     $brands=Brand::all();
-    return view('User.compare')->with(compact('specs','brands'));
+    $ratings = [];
+
+    foreach ($specs as $spec) {
+        $productRatings = Rating::where('prod_id', $spec->id)->get();
+        $ratings[$spec->id] = $productRatings; // Store the ratings for this product in the array
+
+        // Calculate the average rating for this product
+        $rating_sum = $productRatings->sum('stars_rated');
+        $rating_count = count($productRatings);
+        $rating_value = ($rating_count > 0) ? ($rating_sum / $rating_count) : 0;
+
+        // Store the average rating in the ratings array
+        $ratings[$spec->id . '_average'] = $rating_value;
+        $rate=$ratings[$spec->id . '_average'];
+    }
+    return view('User.compare')->with(compact('specs','brands' ,'ratings','rate'));
    }
    // Method to handle the AJAX request for adding products to compare
    public function addToCompare(Request $request)

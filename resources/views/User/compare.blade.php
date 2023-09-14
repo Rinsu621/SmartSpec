@@ -162,7 +162,7 @@
           </td>
         @endforeach
       </tr>
-
+      
     <tr>
       <th>Action:</th>
         @foreach ($user_compare_products as $item)
@@ -247,6 +247,10 @@
         background-color: rgb(125, 9, 9) ;
         color: #f2f2f2;
 
+    }
+    .checked
+    {
+        color: #15657c;
     }
     .add-more
     {

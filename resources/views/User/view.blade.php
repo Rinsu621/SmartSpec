@@ -111,6 +111,23 @@
                 <center><img src="{{ asset('images/' . $spec->image) }}" alt="{{ $spec->name }}" width="150"
                         class="image"></center><br>
                 <p class="name">{{ $spec->name }}</p>
+                <div class="card-rating">
+                    <center>
+                    @php
+                    $rate=$ratings[$spec->id . '_average'];
+                @endphp
+                @if (!empty($ratings[$spec->id]))
+                <!-- Display the count of ratings for this product -->
+                @for($i=1;$i<=$rate;$i++)
+                <i class="fa fa-star checked" ></i>
+                @endfor
+                @for($j=$rate+1;$j<=5;$j++)
+                <i class="fa fa-star"></i>
+                @endfor
+            @else
+                <p>No ratings available</p>
+            @endif
+                </div>
                 <p class="brand"><b>Brand: </b> {{ $spec->brand->name }}</p>
                 <p class="price"><b>Price: </b>{{ $spec->price }}</p>
                 <p class="launch"><b>Launch:</b> {{ $spec->launch }}</p>
@@ -125,7 +142,7 @@
                 <button type="button" class="btn-rate" data-toggle="modal" data-target="#exampleModal" data-mobile-name="{{ $spec->name }}" data-product-id="{{ $spec->id }}">
                     Rate this Mobile
                 </button>
-
+            </center>
             </div>
 
         @endforeach
