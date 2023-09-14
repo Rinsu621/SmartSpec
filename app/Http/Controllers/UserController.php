@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Spec;
 use App\Models\Brand;
+use App\Models\Rating;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -84,13 +85,28 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         return redirect('/');
     }
-
     public function home()
     {
-        $specs=Spec::all();
-        $brands=Brand::all();
-        return view('User.view')->with(compact('specs','brands'));
+        $specs = Spec::all();
+        $brands = Brand::all();
+        $ratings = [];
+
+        foreach ($specs as $spec) {
+            $productRatings = Rating::where('prod_id', $spec->id)->get();
+            $ratings[$spec->id] = $productRatings; // Store the ratings for this product in the array
+
+            // Calculate the average rating for this product
+            $rating_sum = $productRatings->sum('stars_rated');
+            $rating_count = count($productRatings);
+            $rating_value = ($rating_count > 0) ? ($rating_sum / $rating_count) : 0;
+
+            // Store the average rating in the ratings array
+            $ratings[$spec->id . '_average'] = $rating_value;
+        }
+
+        return view('User.view')->with(compact('specs', 'brands', 'ratings'));
     }
+
 
     public function showBrandCards($brand)
 {

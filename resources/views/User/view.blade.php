@@ -1,5 +1,16 @@
 @extends('layouts.layoutuser')
 @section('content')
+        @if(session('status'))
+        <div class="alert alert-success">
+            {{ session('status') }}
+        </div>
+        @endif
+
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
 
     @php
         // Get unique brand names from specs data
@@ -30,6 +41,30 @@
                             <div class="card-body">
                                 <img src="{{ asset('images/' . $spec->image) }}" alt="{{ $spec->name }}"
                                     class="card-image">
+                            </div>
+                            <div class="card-rating">
+                                @php
+                                    $rate=$ratings[$spec->id . '_average'];
+                                @endphp
+                                @if (!empty($ratings[$spec->id]))
+                                <!-- Display the count of ratings for this product -->
+                                @for($i=1;$i<=$rate;$i++)
+                                <i class="fa fa-star checked" ></i>
+                                @endfor
+                                @for($j=$rate+1;$j<=5;$j++)
+                                <i class="fa fa-star"></i>
+                                @endfor
+                                <span>
+                                    @if($ratings[$spec->id]->count()>0)
+                                    {{ $ratings[$spec->id]->count() }} Ratings
+
+                                    @else
+                                    No Ratings
+                                    @endif
+                                </span>
+                            @else
+                                <p>No ratings available</p>
+                            @endif
                             </div>
                             <div class="card-footer">
                                 {{-- <a href="#" class="detail" onclick="togglePopup('detail{{ $spec->id }}')">Detail</a> --}}
@@ -87,7 +122,7 @@
                 <p class="camera"><b>Camera:</b>{{ $spec->camera }}</p>
                 <p class="battery"><b>Battery:</b>{{ $spec->battery }}</p>
                 <p class="resistance"><b>Resistance:</b>{{ $spec->resistance }}</p>
-                <button type="button" class="btn-rate" data-toggle="modal" data-target="#exampleModal" data-mobile-name="{{ $spec->name }}">
+                <button type="button" class="btn-rate" data-toggle="modal" data-target="#exampleModal" data-mobile-name="{{ $spec->name }}" data-product-id="{{ $spec->id }}">
                     Rate this Mobile
                 </button>
 
@@ -96,42 +131,57 @@
         @endforeach
     @endforeach
 
-    </div>
+
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <form action="/add-rating" method="POST">
-            <div class="modal-header">
-                <h1 id="modalTitle" class="modal-title fs-5">Rate this</h1>
-            </div>
-            <div class="modal-body">
-                <div class="rating-css">
-                    <div class="star-icon">
-                        <input type="radio" value="1" name="product_rating" checked id="rating1">
-                        <label for="rating1" class="fa fa-star"></label>
-                        <input type="radio" value="2" name="product_rating" id="rating2">
-                        <label for="rating2" class="fa fa-star"></label>
-                        <input type="radio" value="3" name="product_rating" id="rating3">
-                        <label for="rating3" class="fa fa-star"></label>
-                        <input type="radio" value="4" name="product_rating" id="rating4">
-                        <label for="rating4" class="fa fa-star"></label>
-                        <input type="radio" value="5" name="product_rating" id="rating5">
-                        <label for="rating5" class="fa fa-star"></label>
+            <div class="modal-content">
+                <form action="{{ route('user.rating')}}" method="POST">
+                    @csrf
+                        <input type="hidden" name="product_id" id="product_id_input"  value="">
+                    <div class="modal-body">
+                        <!-- Rating Section -->
+                        <div class="rating-section">
+                            <div class="rating-css">
+                                <div class="star-icon">
+                                    <input type="radio" value="1" name="product_rating" checked id="rating1">
+                                    <label for="rating1" class="fa fa-star"></label>
+                                    <input type="radio" value="2" name="product_rating" id="rating2">
+                                    <label for="rating2" class="fa fa-star"></label>
+                                    <input type="radio" value="3" name="product_rating" id="rating3">
+                                    <label for="rating3" class="fa fa-star"></label>
+                                    <input type="radio" value="4" name="product_rating" id="rating4">
+                                    <label for="rating4" class="fa fa-star"></label>
+                                    <input type="radio" value="5" name="product_rating" id="rating5">
+                                    <label for="rating5" class="fa fa-star"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Rating Section -->
+
+                        <!-- Rate this Text -->
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-size: 20px;">{{$spec->name}}</h1><br><br>
                     </div>
-                </div>
+
+                        <!-- Buttons Section -->
+                        <div class="buttons-section">
+                            <div class="modal-footer">
+                                <button type="button" class="btn-close" data-dismiss="modal" >Close</button>
+                                <button type="submit" class="btn-submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="modal-footer">
-             <button type="submit" class="btn-close">Close</button>
-               <button type="submit" class="btn-submit">Submit</button>
-          </div>
-        </form>
         </div>
-      </div>
+    </div>
+
 
 @endsection
 
 <style>
-    .rating-css div {
+
+.rating-css div {
     color: #ffe400;
     font-size: 30px;
     font-family: sans-serif;
@@ -155,6 +205,23 @@
     transform: scale(0.8);
     transition: 0.3s ease;
   }
+  .rating-css .star-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating-css input + label {
+    margin: 0 10px; /* Add some spacing between the stars */
+}
+.modal-header
+{
+    margin-left: 30%;
+}
+
+
+
+
     .spec-view {
         margin-top: 20px;
     }
@@ -409,6 +476,11 @@
         height: 40px;
         margin-top: 5px;
     }
+
+    .checked
+    {
+        color: #15657c;
+    }
 </style>
 
 <script>
@@ -462,18 +534,46 @@
             button.textContent = cards.length > 4 ? 'View More' : 'View Less';
         });
     });
+
     function updateModalTitle(button) {
     var mobileName = button.getAttribute('data-mobile-name');
-    var modalTitle = document.getElementById('modalTitle');
-    modalTitle.textContent = "Rate " + mobileName;
+    var modalTitle = document.querySelector('.modal-title'); // Use the correct selector
+    modalTitle.textContent =  mobileName;
 }
+
 document.addEventListener('DOMContentLoaded', function() {
     var rateButtons = document.querySelectorAll('.btn-rate');
     rateButtons.forEach(function(button) {
         button.addEventListener('click', function() {
+            var mobileName = button.getAttribute('data-mobile-name');
+            var modalTitle = document.querySelector('.modal-title');
+            var productIdInput = document.querySelector('input[name="product_id"]');
+
+            modalTitle.textContent = mobileName;
+            productIdInput.value = button.getAttribute('data-product-id');
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var rateButtons = document.querySelectorAll('.btn-rate');
+    var productIdInput = document.getElementById('product_id_input');
+
+    rateButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var productId = button.getAttribute('data-product-id');
+            productIdInput.value = productId;
+            // You can also update the modal title here if needed
             updateModalTitle(button);
         });
     });
 });
 
+function hideSessionMessage() {
+            $('.alert').fadeOut(); // Hide the message with a fade-out effect
+        }
+
+        // Call the function to hide the message after 5 seconds (adjust the time as needed)
+        setTimeout(hideSessionMessage, 5000); // 5000 milliseconds = 5 seconds
+    </script>
 </script>

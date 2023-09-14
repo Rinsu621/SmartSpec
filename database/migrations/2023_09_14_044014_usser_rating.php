@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('ratings', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
-            $table->string('prod_id');
-            $table->date('stars-rated')->nullable();
+            $table->string('prod_id')->defaut('0');
+            $table->integer('stars_rated')->nullable();
             $table->timestamps();
         });
     }

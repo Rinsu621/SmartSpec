@@ -96,5 +96,7 @@
         });
 
     </script>
+
+    <!-- End of Rate this Text -->
 </body>
 </html>

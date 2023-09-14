@@ -12,7 +12,11 @@ class Rating extends Model
 
     protected $fillable=[
         'user_id',
-        'prod-id',
-        'stars-rated',
+        'prod_id',
+        'stars_rated',
+    ];
+
+    protected $casts = [
+        'stars_rated' => 'integer', // Cast to integer
     ];
 }

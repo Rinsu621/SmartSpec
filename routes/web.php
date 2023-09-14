@@ -7,6 +7,7 @@ Use App\Http\Controllers\SpecController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\CompareController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\RatingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,3 +69,6 @@ Route::get('/show_brand_cards/{brand}', [UserController::class,'showBrandCards']
 //search
 Route::get('/spec/adminsearch',[SearchController::class,'adminSearch'])->name('admin.search');
 Route::get('/home/usersearch',[SearchController::class,'userSearch'])->name('user.search');
+
+//rating
+Route::post('/rate', [RatingController::class,'add'])->name('user.rating');
