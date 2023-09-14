@@ -42,6 +42,16 @@
                                 <img src="{{ asset('images/' . $spec->image) }}" alt="{{ $spec->name }}"
                                     class="card-image">
                             </div>
+                            <div class="rating-count">
+                                <span>
+                                    @if($ratings[$spec->id]->count()>0)
+                                    {{ $ratings[$spec->id]->count() }} Ratings
+
+                                    @else
+                                    No Ratings
+                                    @endif
+                                </span>
+                            </div>
                             <div class="card-rating">
                                 @php
                                     $rate=$ratings[$spec->id . '_average'];
@@ -54,14 +64,7 @@
                                 @for($j=$rate+1;$j<=5;$j++)
                                 <i class="fa fa-star"></i>
                                 @endfor
-                                <span>
-                                    @if($ratings[$spec->id]->count()>0)
-                                    {{ $ratings[$spec->id]->count() }} Ratings
 
-                                    @else
-                                    No Ratings
-                                    @endif
-                                </span>
                             @else
                                 <p>No ratings available</p>
                             @endif
@@ -495,6 +498,10 @@
     }
 
     .checked
+    {
+        color: #15657c;
+    }
+    .rating-count
     {
         color: #15657c;
     }

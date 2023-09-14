@@ -12,8 +12,12 @@ class SpecController extends Controller
 {
     public function index()
     {
-        $specs=Spec::paginate(10);
-        return view('Spec.view')->with(compact('specs'));
+        // $specs=Spec::paginate(10);
+        // return view('Spec.view')->with(compact('specs'));
+        $specs = Spec::orderBy('launch', 'desc') // Sort by launch date in descending order
+        ->paginate(10); // Adjust the number of records per page as needed
+
+    return view('Spec.view')->with(compact('specs'));
     }
 
     public function create()

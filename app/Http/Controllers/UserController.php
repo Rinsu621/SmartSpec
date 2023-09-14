@@ -87,7 +87,7 @@ class UserController extends Controller
     }
     public function home()
     {
-        $specs = Spec::all();
+        $specs = Spec::orderBy('launch', 'desc')->get();
         $brands = Brand::all();
         $ratings = [];
 
