@@ -5,8 +5,9 @@
     <div class="content">
         <div id="overlay"></div>
         <div class="spec-view">
-            <h2 class="spec-topic">Search Result</h2>
             @if(count($result) > 0)
+            <h2 class="spec-topic">Search Result</h2>
+
             <div class="table-container">
                 <table class="custom-table">
                     <thead class="th-heading">
@@ -40,7 +41,7 @@
                 </table>
             </div>
             @else
-            <p>No results found</p>
+           <center> <p class="search-result"> No results found</p></center>
             @endif
         </div>
         @foreach ($result as $spec)
@@ -324,6 +325,12 @@
        .pagination .page-item.active .page-link {
            background-color: #1B5D6B; /* Active page background color (Darker Green) */
            border-color: #ffff; /* Active page border color (Darker Green) */
+       }
+       .search-result
+       {
+        color: #1B5D6B;
+        font-size: 22px;
+        font-weight: bold;
        }
 
 
