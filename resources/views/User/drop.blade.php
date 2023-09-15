@@ -1,5 +1,17 @@
 @extends('layouts.layoutuser')
 @section('content')
+
+@if(session('status'))
+<div class="alert alert-success">
+    {{ session('status') }}
+</div>
+@endif
+
+@if(session('error'))
+<div class="alert alert-danger">
+    {{ session('error') }}
+</div>
+@endif
     @php
         // Get unique brand names from specs data
         $uniqueBrands = $specs->pluck('brand.name')->unique();
@@ -31,6 +43,33 @@
                         <div class="card-body">
                             <img src="{{ asset('images/' . $spec->image) }}" alt="{{ $spec->name }}"
                                 class="card-image">
+                        </div>
+                        <div class="rating-count">
+                            <span>
+                                @if($ratings[$spec->id]->count()>0)
+                                {{ $ratings[$spec->id]->count() }} Ratings
+
+                                @else
+                                No Ratings
+                                @endif
+                            </span>
+                        </div>
+                        <div class="card-rating">
+                            @php
+                                $rate=$ratings[$spec->id . '_average'];
+                            @endphp
+                            @if (!empty($ratings[$spec->id]))
+                            <!-- Display the count of ratings for this product -->
+                            @for($i=1;$i<=$rate;$i++)
+                            <i class="fa fa-star checked" ></i>
+                            @endfor
+                            @for($j=$rate+1;$j<=5;$j++)
+                            <i class="fa fa-star"></i>
+                            @endfor
+
+                        @else
+                            <p>No ratings available</p>
+                        @endif
                         </div>
                         <div class="card-footer">
                             <button class="detail" onclick="togglePopup('detail{{ $spec->id }}')">Detail</button>
@@ -73,6 +112,24 @@
             <center><img src="{{ asset('images/' . $spec->image) }}" alt="{{ $spec->name }}" width="150"
                     class="image"></center><br>
             <p class="name">{{ $spec->name }}</p>
+            <div class="card-rating">
+                <center>
+                @php
+                $rate=$ratings[$spec->id . '_average'];
+            @endphp
+            @if (!empty($ratings[$spec->id]))
+            <!-- Display the count of ratings for this product -->
+            @for($i=1;$i<=$rate;$i++)
+            <i class="fa fa-star checked" ></i>
+            @endfor
+            @for($j=$rate+1;$j<=5;$j++)
+            <i class="fa fa-star"></i>
+            @endfor
+        @else
+            <p>No ratings available</p>
+        @endif
+    </center>
+            </div>
             <p class="brand"><b>Brand: </b> {{ $spec->brand->name }}</p>
             <p class="price"><b>Price: </b>{{ $spec->price }}</p>
             <p class="launch"><b>Launch:</b> {{ $spec->launch }}</p>
@@ -84,14 +141,99 @@
             <p class="camera"><b>Camera:</b>{{ $spec->camera }}</p>
             <p class="battery"><b>Battery:</b>{{ $spec->battery }}</p>
             <p class="resistance"><b>Resistance:</b>{{ $spec->resistance }}</p>
-            <button type="button" class="btn-rate" data-toggle="modal" data-target="#exampleModal">
+            <button type="button" class="btn-rate" data-toggle="modal" data-target="#exampleModal" data-mobile-name="{{ $spec->name }}" data-product-id="{{ $spec->id }}">
                 Rate this Mobile
             </button>
         </div>
     @endforeach
 
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('user.rating')}}" method="POST">
+                    @csrf
+                        <input type="hidden" name="product_id" id="product_id_input"  value="">
+                    <div class="modal-body">
+                        <!-- Rating Section -->
+                        <div class="rating-section">
+                            <div class="rating-css">
+                                <div class="star-icon">
+                                    <input type="radio" value="1" name="product_rating" checked id="rating1">
+                                    <label for="rating1" class="fa fa-star"></label>
+                                    <input type="radio" value="2" name="product_rating" id="rating2">
+                                    <label for="rating2" class="fa fa-star"></label>
+                                    <input type="radio" value="3" name="product_rating" id="rating3">
+                                    <label for="rating3" class="fa fa-star"></label>
+                                    <input type="radio" value="4" name="product_rating" id="rating4">
+                                    <label for="rating4" class="fa fa-star"></label>
+                                    <input type="radio" value="5" name="product_rating" id="rating5">
+                                    <label for="rating5" class="fa fa-star"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End of Rating Section -->
 
+                        <!-- Rate this Text -->
+                        <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel" style="font-size: 20px;">{{$spec->name}}</h1><br><br>
+                    </div>
+
+                        <!-- Buttons Section -->
+                        <div class="buttons-section">
+                            <div class="modal-footer">
+                                <button type="button" class="btn-close" data-dismiss="modal" >Close</button>
+                                <button type="submit" class="btn-submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+@endsection
     <style>
+        .rating-css div {
+    color: #ffe400;
+    font-size: 30px;
+    font-family: sans-serif;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 20px 0;
+  }
+  .rating-css input {
+    display: none;
+  }
+  .rating-css input + label {
+    font-size: 60px;
+    text-shadow: 1px 1px 0 #8f8420;
+    cursor: pointer;
+  }
+  .rating-css input:checked + label ~ label {
+    color: #b4afaf;
+  }
+  .rating-css label:active {
+    transform: scale(0.8);
+    transition: 0.3s ease;
+  }
+  .rating-css .star-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rating-css input + label {
+    margin: 0 10px; /* Add some spacing between the stars */
+}
+.modal-header
+{
+    margin-left: 30%;
+}
+
+
+
         .spec-view {
             margin-top: 20px;
         }
@@ -310,16 +452,50 @@
         .view-more-btn:hover {
             background-color: #15657c;
         }
+        .btn-close
+    {
+        cursor: pointer;
+        border: none;
+        border-radius: 20px;
+        background-color: #888888;
+        text-decoration: none;
+        color: #F2F2F2;
+        border-radius: 30px;
+        font-size: 14px;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 90px;
+        height: 40px;
+        margin-top: 5px;
+    }
+    .btn-submit
+    {
+        cursor: pointer;
+        border: none;
+        background-color: #15657c;
+        text-decoration: none;
+        color: #F2F2F2;
+        border-radius: 30px;
+        font-size: 14px;
+        padding-left: 15px;
+        padding-right: 15px;
+        width: 90px;
+        height: 40px;
+        margin-top: 5px;
+    }
+
+    .checked
+    {
+        color: #15657c;
+    }
+    .rating-count
+    {
+        color: #15657c;
+    }
     </style>
 
     <script>
-        // function confirmDelete(iteration) {
-        //     if (confirm('Are you sure you want to delete this Specification?')) {
-        //         document.getElementById('deleteForm' + iteration).submit();
-        //     } else {
-        //         return false;
-        //     }
-        // }
+
 
         function togglePopup(popupId) {
             var popupdetail = document.getElementById(popupId);
@@ -336,34 +512,47 @@
             }
         }
 
-        // function showMore(button) {
-        //     var cardContainer = button.parentElement.previousElementSibling;
-        //     var cards = cardContainer.querySelectorAll('.card');
+        function updateModalTitle(button) {
+    var mobileName = button.getAttribute('data-mobile-name');
+    var modalTitle = document.querySelector('.modal-title'); // Use the correct selector
+    modalTitle.textContent =  mobileName;
+}
 
-        //     cards.forEach(function(card, index) {
-        //         if (index >= 4) {
-        //             card.style.display = card.style.display === 'block' ? 'none' : 'block';
-        //         }
-        //     });
+document.addEventListener('DOMContentLoaded', function() {
+    var rateButtons = document.querySelectorAll('.btn-rate');
+    rateButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var mobileName = button.getAttribute('data-mobile-name');
+            var modalTitle = document.querySelector('.modal-title');
+            var productIdInput = document.querySelector('input[name="product_id"]');
 
-        //     button.textContent = button.textContent === 'View Less' ? 'View More' : 'View Less';
-        // }
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     var buttons = document.querySelectorAll('.view-more-btn');
-        //     buttons.forEach(function(button) {
-        //         var cardContainer = button.parentElement.previousElementSibling;
-        //         var cards = cardContainer.querySelectorAll('.card');
-
-        //         cards.forEach(function(card, index) {
-        //             if (index >= 4) {
-        //                 card.style.display = 'none';
-        //             }
-        //         });
-
-                button.textContent = cards.length > 4 ? 'View More' : 'View Less';
-            });
+            modalTitle.textContent = mobileName;
+            productIdInput.value = button.getAttribute('data-product-id');
         });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var rateButtons = document.querySelectorAll('.btn-rate');
+    var productIdInput = document.getElementById('product_id_input');
+
+    rateButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+            var productId = button.getAttribute('data-product-id');
+            productIdInput.value = productId;
+            // You can also update the modal title here if needed
+            updateModalTitle(button);
+        });
+    });
+});
+
+function hideSessionMessage() {
+            $('.alert').fadeOut(); // Hide the message with a fade-out effect
+        }
+
+        // Call the function to hide the message after 5 seconds (adjust the time as needed)
+        setTimeout(hideSessionMessage, 5000); // 5000 milliseconds = 5 seconds
 
     </script>
 
-@endsection
+

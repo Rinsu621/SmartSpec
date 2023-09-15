@@ -18,20 +18,20 @@ class CompareController extends Controller
     $brands=Brand::all();
     $ratings = [];
 
-    foreach ($specs as $spec) {
-        $productRatings = Rating::where('prod_id', $spec->id)->get();
-        $ratings[$spec->id] = $productRatings; // Store the ratings for this product in the array
+    // foreach ($specs as $spec) {
+    //     $productRatings = Rating::where('prod_id', $spec->id)->get();
+    //     $ratings[$spec->id] = $productRatings; // Store the ratings for this product in the array
 
-        // Calculate the average rating for this product
-        $rating_sum = $productRatings->sum('stars_rated');
-        $rating_count = count($productRatings);
-        $rating_value = ($rating_count > 0) ? ($rating_sum / $rating_count) : 0;
+    //     // Calculate the average rating for this product
+    //     $rating_sum = $productRatings->sum('stars_rated');
+    //     $rating_count = count($productRatings);
+    //     $rating_value = ($rating_count > 0) ? ($rating_sum / $rating_count) : 0;
 
-        // Store the average rating in the ratings array
-        $ratings[$spec->id . '_average'] = $rating_value;
-        $rate=$ratings[$spec->id . '_average'];
-    }
-    return view('User.compare')->with(compact('specs','brands' ,'ratings','rate'));
+    //     // Store the average rating in the ratings array
+    //     $ratings[$spec->id . '_average'] = $rating_value;
+    //     $rate=$ratings[$spec->id . '_average'];
+    // }
+    return view('User.compare')->with(compact('specs','brands'));
    }
    // Method to handle the AJAX request for adding products to compare
    public function addToCompare(Request $request)

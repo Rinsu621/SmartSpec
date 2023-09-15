@@ -110,14 +110,29 @@ class UserController extends Controller
 
     public function showBrandCards($brand)
 {
-    $specs=Spec::all();
+    $specs = Spec::orderBy('launch', 'desc')->get();
     $uniqueBrands = $specs->pluck('brand.name')->unique();
 
     // Filter specs based on the selected brand
     $selectedBrand = $brand;
     $brandCards = $specs->where('brand.name', $selectedBrand);
+    $ratings = [];
 
-    return view('User.drop', compact('uniqueBrands', 'brandCards', 'selectedBrand','specs'));
+    foreach ($specs as $spec) {
+        $productRatings = Rating::where('prod_id', $spec->id)->get();
+        $ratings[$spec->id] = $productRatings; // Store the ratings for this product in the array
+
+        // Calculate the average rating for this product
+        $rating_sum = $productRatings->sum('stars_rated');
+        $rating_count = count($productRatings);
+        $rating_value = ($rating_count > 0) ? ($rating_sum / $rating_count) : 0;
+
+        // Store the average rating in the ratings array
+        $ratings[$spec->id . '_average'] = $rating_value;
+    }
+
+
+    return view('User.drop', compact('uniqueBrands', 'brandCards', 'selectedBrand','specs','ratings'));
 
 }
 }

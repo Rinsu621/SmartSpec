@@ -130,7 +130,9 @@
             @else
                 <p>No ratings available</p>
             @endif
+        </center>
                 </div>
+
                 <p class="brand"><b>Brand: </b> {{ $spec->brand->name }}</p>
                 <p class="price"><b>Price: </b>{{ $spec->price }}</p>
                 <p class="launch"><b>Launch:</b> {{ $spec->launch }}</p>
@@ -145,7 +147,7 @@
                 <button type="button" class="btn-rate" data-toggle="modal" data-target="#exampleModal" data-mobile-name="{{ $spec->name }}" data-product-id="{{ $spec->id }}">
                     Rate this Mobile
                 </button>
-            </center>
+
             </div>
 
         @endforeach
@@ -600,4 +602,4 @@ function hideSessionMessage() {
         // Call the function to hide the message after 5 seconds (adjust the time as needed)
         setTimeout(hideSessionMessage, 5000); // 5000 milliseconds = 5 seconds
     </script>
-</script>
+
